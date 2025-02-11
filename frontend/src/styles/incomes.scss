@@ -1,0 +1,160 @@
+.categories{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(121px, 352px));
+  gap: 20px;
+  margin-left: 48px;
+}
+
+.box{
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #CED4DA;
+}
+
+.action{
+  display: flex;
+  margin-top: 10px;
+}
+
+.action-box-btn{
+  display: flex;
+  padding: 11px 16px;
+  font-size: 14px;
+  border: none;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.edit{
+  width: 134px;
+  height: 38px;
+  background: #0D6EFD;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.delete{
+  width: 88px;
+  height: 38px;
+  background: #DC3545;
+  border-radius: 5px;
+}
+
+.empty-box{
+  display: flex;
+  justify-content: center;
+}
+
+.plus{
+  background-color: transparent;
+  border: none;
+  font-size: 28px;
+  color: #CED4DA;
+  margin: auto;
+}
+
+.pop-up{
+  display: none;
+}
+
+
+.pop-up.open {
+  display: block;
+}
+
+.pop-up.close {
+  display: none;
+}
+
+.pop-up__container{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #00000073;
+  z-index: 2;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.pop-up__body{
+  background-color: #FFFFFF;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  margin: 0 auto;
+  width: 530px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.pop-up-action{
+  display: flex;
+}
+
+.pop-up__text {
+  text-align: center;
+  display: flex;
+  font-size: 20px;
+  line-height: 23px;
+  color: #290661;
+  margin-bottom: 20px;
+}
+
+.pop-up__button{
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  border: none;
+  border-radius: 40px;
+  background-color: rgba(221, 49, 66, 1);
+  font-size: 20px;
+  padding: 11px 0 11px 0;
+  width: 100px;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.btn-action{
+  padding: 11px 16px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #FFFFFF;
+}
+.green-btn{
+  background-color: #198754;
+  margin-right: 12px;
+}
+.red-btn{
+  background-color: #DC3545;
+  margin-right: 12px;
+}
+
+.options-block{
+  margin-left: 48px;
+}
+
+.option-input{
+  width: 397px;
+  margin-bottom: 20px;
+  font-family: Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 24px;
+  color: #000000;
+}
+
+.option-input::placeholder{
+  font-family: Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 24px;
+  color: #6C757D;
+}

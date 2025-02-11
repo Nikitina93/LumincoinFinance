@@ -1,0 +1,4 @@
+export class CreatOption{
+    constructor() {
+    }
+}
