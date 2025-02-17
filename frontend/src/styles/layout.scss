@@ -1,10 +1,13 @@
+body{
+  height: 100vh;
+}
+
 .sidebar {
   bottom: 0;
   float: right;
   left: 0;
   position: fixed;
   top: 0;
-  width: 219px;
   z-index: 2;
 }
 
@@ -20,17 +23,22 @@
   padding: 60px 20px 0 20px;
 }
 
-.btn-toggle svg {
-  transition: transform 0.35s ease;
-  transform-origin: center;
+.btn-toggle:not(.collapsed) svg {
+  transform: rotate(90deg);
 }
+
 
 .btn-toggle.collapsed svg {
   transform: rotate(0deg);
 }
 
-.btn-toggle:not(.collapsed) svg {
-  transform: rotate(90deg);
+.btn:focus {
+  box-shadow: none;
+  background: #0D6EFD;
+  border-top: 1px solid #0D6EFD;
+  border-right: 1px solid #0D6EFD;
+  border-left: 1px solid#0D6EFD;
+  color: #ffffff;
 }
 
 .active-block {
@@ -65,15 +73,16 @@
   border-color: #d9d9d9;
 }
 
+.nav-item{
+  border: none;
+  border-radius: 5px;
+}
+
 .link-custom {
   color: #052c65;
 }
 
-.sidebar .nav-link.active {
-  color: #ffffff;
-}
-
-.sidebar .nav-link.active path {
+.sidebar .nav-link:focus path {
   fill: #ffffff;
 }
 
@@ -81,38 +90,25 @@
   background: #0D6EFD;
 }
 
-.nav-item.active {
-  background: #0D6EFD;
-}
-
 .nav-item:hover a {
   color: #FFFFFF;
 }
-.nav-item.active a {
-  color: #FFFFFF;
-}
+
 
 .nav-item:hover button {
-  color: #FFFFFF;
-}
-.nav-item.active button {
   color: #FFFFFF;
 }
 
 .nav-item:hover svg path {
   fill: #FFFFFF;
 }
-.nav-item.active svg path {
-  fill: #FFFFFF;
-}
-
 
 .collapse {
   border-top: none;
   border-right: 1px solid #0D6EFD;
   border-left: 1px solid #0D6EFD;
   border-bottom: 1px solid #0D6EFD;
-  border-radius: 0px 0px 5px 5px;
+  border-radius: 0 0 5px 5px;
   font-family: Roboto, sans-serif;
   font-size: 14px;
   line-height: 16px;
@@ -127,4 +123,20 @@
 .btn.disabled, .btn:disabled, fieldset:disabled .btn{
   background-color: #72a5f1;
   border: #72a5f1;;
+}
+
+.dropdown-toggle::after{
+  content: none;
+}
+
+.collapse {
+  &:not(.show) {
+    display: none;
+  }
+}
+
+.dropdown-menu{
+  &:not(.show) {
+    display: none;
+  }
 }

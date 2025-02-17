@@ -1,9 +1,10 @@
 export class Logout {
     constructor(openNewRoute) {
+        this.iconUserElement = document.getElementById('user-icon');
+        this.logoutElement = document.getElementById('dropdown-menu');
+
         this.openNewRoute = openNewRoute;
 
-
-        this.iconElement = document.getElementById('user-icon');
 
         if (!localStorage.getItem('user') || !localStorage.getItem('refreshToken')) {
             return this.openNewRoute('/login');
@@ -12,17 +13,9 @@ export class Logout {
         this.logout().then();
     }
 
-    openPopUp() {
-        let popUp = document.getElementById('pop-up');
-
-        popUp.classList.add('open');
+    openLogoutButton(){
 
     }
-    closePopUp() {
-        let popUp = document.getElementById('pop-up');
-        popUp.classList.remove('open');
-    }
-
     async logout() {
 
         const response = await fetch('http://localhost:3000/api/logout', {

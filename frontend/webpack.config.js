@@ -42,6 +42,7 @@ module.exports = {
                 {from: "./src/components/plugins/jquery-ui.min.js", to: "js"},
                 {from: "./src/components/plugins/jquery-3.7.1.min.js", to: "js"},
                 {from: "./src/components/plugins/bootstrap.min.js", to: "js"},
+                {from: "./src/components/js.js", to: "js"},
             ],
         }),
     ],

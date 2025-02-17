@@ -146,25 +146,25 @@ export class Router {
         document.addEventListener('click', this.clickHandler.bind(this));
     }
 
-    async openNewRoute(url){
+    async openNewRoute(url) {
         const currentRoute = window.location.pathname;
         history.pushState({}, '', url);  // чтобы в историю браузера добавить url-адреса)
         await this.activateRoute(null, currentRoute);
     }
 
-    async clickHandler(e){
+    async clickHandler(e) {
         let element = null;
-        if(e.target.nodeName === 'A'){
+        if (e.target.nodeName === 'A') {
             element = e.target;
-        } else if(e.target.parentNode.nodeName === 'A'){
+        } else if (e.target.parentNode.nodeName === 'A') {
             element = e.target.parentNode;
         }
 
-        if(element){
+        if (element) {
             e.preventDefault();
 
             const url = element.href.replace(window.location.origin, '');
-            if(!url || url === '/#' || url.startsWith('javascript:void(0)')){
+            if (!url || url === '/#' || url.startsWith('javascript:void(0)')) {
                 return
             }
 
@@ -175,6 +175,7 @@ export class Router {
     async activateRoute() {
         const urlRoute = window.location.pathname;
         const newRoute = this.routes.find(item => item.route === urlRoute);
+
 
         if (newRoute) {
             if (newRoute.title) {

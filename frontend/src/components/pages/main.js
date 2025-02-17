@@ -1,5 +1,6 @@
 export class Main {
     constructor() {
+
         this.pieChart();
     }
 
