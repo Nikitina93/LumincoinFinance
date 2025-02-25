@@ -47,7 +47,6 @@ module.exports = {
                 {from: "./src/components/plugins/bootstrap.bundle.min.js", to: "js"},
                 {from: "./src/components/plugins/bootstrap-datepicker.min.js", to: "js"},
                 {from: "./src/components/plugins/bootstrap-datepicker.ru.min.js", to: "js"},
-                {from: "./src/components/js.js", to: "js"},
             ],
         }),
     ],

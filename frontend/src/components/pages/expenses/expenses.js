@@ -48,6 +48,7 @@ export class Expenses{
         categoryButton.onclick
         categoryButton.setAttribute("aria-expanded", "true");
         categoryButton.classList.remove('collapsed');
+        categoryButton.style.borderRadius = '5px 5px 0px 0px';
         categoryButton.classList.add('active');
         svgCollapse.classList.add('active');
         expensesCollapse.classList.add('active');

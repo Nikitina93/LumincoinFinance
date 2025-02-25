@@ -41,7 +41,7 @@ export class Incomes {
         })
     }
 
-    activateBlock(){
+    activateBlock() {
         const categoryButton = document.getElementById('toggle');
         const collapse = document.getElementById('dashboard-collapse');
         const incomesCollapse = document.getElementById('incomes-collapse');
@@ -49,10 +49,12 @@ export class Incomes {
         categoryButton.onclick;
         categoryButton.setAttribute("aria-expanded", "true");
         categoryButton.classList.remove('collapsed');
+        categoryButton.style.borderRadius = '5px 5px 0px 0px';
         categoryButton.classList.add('active');
         svgCollapse.classList.add('active');
         incomesCollapse.classList.add('active');
         collapse.classList.add('show');
+
     }
 
 }

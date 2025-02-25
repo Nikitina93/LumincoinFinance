@@ -1,10 +1,14 @@
+import {AuthUtils} from "../../../utils/auth-utils";
+import {HttpUtils} from "../../../utils/http-utils";
+
 export class Login {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
 
-        // if(localStorage.getItem('user')){
-        //     return this.openNewRoute('/');
-        // }
+
+        if (AuthUtils.getAuthInfo(AuthUtils.userKey)) {
+            return this.openNewRoute('/');
+        }
 
         this.emailElement = document.getElementById('email');
         this.passwordElement = document.getElementById('password');
@@ -38,36 +42,25 @@ export class Login {
     async login() {
         this.commonErrorElement.style.display = 'none';
         if (this.validateForm()) {
-            const response = await fetch('http://localhost:3000/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: this.emailElement.value,
-                    password: this.passwordElement.value,
-                    rememberMe: this.rememberMeElement.checked
-                })
+
+            const result = await HttpUtils.request('/login', 'POST',{
+                email: this.emailElement.value,
+                password: this.passwordElement.value,
+                rememberMe: this.rememberMeElement.checked
             });
 
-            const result = await response.json();
-            if (result.error || !result.tokens.accessToken || !result.tokens.refreshToken
-                || !result.user.name || !result.user.lastName || !result.user.id) {
+            if (result.error || !result.response || (result.response && (!result.response.tokens
+                || !result.response.user.name || !result.response.user.lastName || !result.response.user.id))) {
                 this.commonErrorElement.style.display = 'block';
                 return;
             }
 
-            localStorage.setItem('tokens', JSON.stringify({
-                accessToken: result.tokens.accessToken,
-                refreshToken: result.tokens.refreshToken
-            }));
-
-            localStorage.setItem('user', JSON.stringify({
-                name: result.user.name,
-                lastName: result.user.lastName,
-                id: result.user.id
-            }));
+            AuthUtils.setTokens(
+                {
+                    accessToken: result.response.tokens.accessToken,
+                    refreshToken: result.response.tokens.refreshToken
+                }
+            )
 
             this.openNewRoute('/');
         }

@@ -80,6 +80,7 @@ export class Main {
             mainButton.classList.remove('active');
             svgMain.classList.remove('active');
             categoryButton.classList.add('active');
+            categoryButton.style.borderRadius = '5px 5px 0px 0px';
             svgCollapse.classList.add('active');
         })
     }

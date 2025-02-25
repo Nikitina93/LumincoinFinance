@@ -8,7 +8,6 @@ import {EditExpenses} from "./components/pages/expenses/edit-expenses";
 import {Options} from "./components/pages/options/options";
 import {CreatOption} from "./components/pages/options/creat-option";
 import {EditOption} from "./components/pages/options/edit-option";
-import {Layout} from "./components/layout";
 import {Login} from "./components/pages/auth/login";
 import {SignUp} from "./components/pages/auth/sign-up";
 import {Logout} from "./components/pages/auth/logout";
@@ -29,7 +28,6 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 load: () => {
                     new Main();
-                    new Layout();
                 }
             },
             {

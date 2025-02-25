@@ -1,10 +1,13 @@
-export class SignUp{
+import {AuthUtils} from "../../../utils/auth-utils";
+import {HttpUtils} from "../../../utils/http-utils";
+
+export class SignUp {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
 
-        // if(localStorage.getItem('user')){
-        //     return this.openNewRoute('/');
-        // }
+        if (AuthUtils.getAuthInfo(AuthUtils.userKey)) {
+            return this.openNewRoute('/');
+        }
 
         this.nameElement = document.getElementById('name');
         this.lastNameElement = document.getElementById('lastName');
@@ -66,37 +69,35 @@ export class SignUp{
         return isValid
     }
 
-    async signUp(){
+    async signUp() {
         this.commonErrorElement.style.display = 'none';
         if (this.validateForm()) {
-            const response = await fetch('http://localhost:3000/api/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: this.nameElement.value,
-                    lastName: this.lastNameElement.value,
-                    email: this.emailElement.value,
-                    password: this.passwordElement.value,
-                    passwordRepeat: this.passwordRepeatElement.value
-                })
+
+
+            const result = await HttpUtils.request('/signup', 'POST',{
+                name: this.nameElement.value,
+                lastName: this.lastNameElement.value,
+                email: this.emailElement.value,
+                password: this.passwordElement.value,
+                passwordRepeat: this.passwordRepeatElement.value
             });
 
-            const result = await response.json();
 
-            if (result.error || !result.user.name || !result.user.lastName || !result.user.id || !result.user.email) {
+            if (result.error || !result.response || (result.response && ( !result.response.user.name
+                || !result.response.user.lastName || !result.response.user.id || !result.response.user.email))){
                 this.commonErrorElement.style.display = 'block';
                 return;
             }
 
-            localStorage.setItem('user', JSON.stringify({
-                name: result.user.name,
-                lastName: result.user.lastName,
-                id: result.user.id,
-                email: result.user.email
-            }));
+            AuthUtils.setUser(
+                {
+                    name: result.response.user.name,
+                    lastName: result.response.user.lastName,
+                    id: result.response.user.id,
+                    email: result.response.user.email
+                }
+            );
+
 
             this.openNewRoute('/');
         }

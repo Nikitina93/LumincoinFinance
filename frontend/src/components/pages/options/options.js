@@ -56,6 +56,7 @@ export class Options {
     }
 
     activateBlock() {
+
         const categoryButton = document.getElementById('toggle');
         const optionsButton = document.getElementById('options');
         const svgOptions = document.getElementById('svg-options');
@@ -68,6 +69,7 @@ export class Options {
             optionsButton.classList.remove('active');
             svgOptions.classList.remove('active');
             categoryButton.classList.add('active');
+            categoryButton.style.borderRadius = '5px 5px 0px 0px';
             svgCollapse.classList.add('active');
         })
     }

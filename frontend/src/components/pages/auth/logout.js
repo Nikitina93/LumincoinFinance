@@ -1,10 +1,13 @@
+import {AuthUtils} from "../../../utils/auth-utils";
+import {HttpUtils} from "../../../utils/http-utils";
+
 export class Logout {
     constructor(openNewRoute) {
 
         this.openNewRoute = openNewRoute;
 
 
-        if (!localStorage.getItem('user') || !localStorage.getItem('refreshToken')) {
+        if (!AuthUtils.getAuthInfo(AuthUtils.userKey) || !AuthUtils.getAuthInfo(AuthUtils.tokensKey)) {
             return this.openNewRoute('/login');
         }
 
@@ -12,21 +15,12 @@ export class Logout {
     }
 
     async logout() {
-
-        await fetch('http://localhost:3000/api/logout', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({
-                refreshToken: localStorage.getItem('refreshToken')
-            })
+        await HttpUtils.request('/logout', 'POST',{
+            tokens: AuthUtils.getAuthInfo(AuthUtils.tokensKey),
         });
 
 
-        localStorage.removeItem('tokens');
-        localStorage.removeItem('user');
+        AuthUtils.removeAuthInfo();
 
         this.openNewRoute('/login');
     }
