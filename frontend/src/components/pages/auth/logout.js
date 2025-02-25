@@ -1,7 +1,5 @@
 export class Logout {
     constructor(openNewRoute) {
-        this.iconUserElement = document.getElementById('user-icon');
-        this.logoutElement = document.getElementById('dropdown-menu');
 
         this.openNewRoute = openNewRoute;
 
@@ -13,12 +11,9 @@ export class Logout {
         this.logout().then();
     }
 
-    openLogoutButton(){
-
-    }
     async logout() {
 
-        const response = await fetch('http://localhost:3000/api/logout', {
+        await fetch('http://localhost:3000/api/logout', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

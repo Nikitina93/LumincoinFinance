@@ -2,9 +2,9 @@ export class SignUp{
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
 
-        if(localStorage.getItem('user')){
-            return this.openNewRoute('/');
-        }
+        // if(localStorage.getItem('user')){
+        //     return this.openNewRoute('/');
+        // }
 
         this.nameElement = document.getElementById('name');
         this.lastNameElement = document.getElementById('lastName');

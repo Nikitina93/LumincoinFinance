@@ -2,9 +2,9 @@ export class Login {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
 
-        if(localStorage.getItem('user')){
-            return this.openNewRoute('/');
-        }
+        // if(localStorage.getItem('user')){
+        //     return this.openNewRoute('/');
+        // }
 
         this.emailElement = document.getElementById('email');
         this.passwordElement = document.getElementById('password');

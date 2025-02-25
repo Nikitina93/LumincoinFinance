@@ -8,7 +8,7 @@
         </div>
         <div class="main-filter options-filter d-flex flex-row flex-wrap align-items-center">
             <div class="main-filter-block">
-                <button class="filter-button btn btn-secondary border-secondary w-100 active" type="button"
+                <button class="filter-button btn  border-secondary w-100 " type="button"
                         id="main-button-today" data-period="today">Сегодня
                 </button>
             </div>
@@ -42,16 +42,10 @@
                 </button>
             </div>
             <div class="main-filter-block d-flex">
-                <span> с </span>
-                <button class="date-interval filter-button btn border-secondary w-100" type="button"
-                        id="start-interval" data-period="interval"> Дата
-                </button>
-            </div>
-            <div class="main-filter-block d-flex">
-                <span> по </span>
-                <button class="date-interval filter-button btn border-secondary w-100" type="button"
-                        id="end-interval" data-period="interval"> Дата
-                </button>
+                <span>с</span>
+                <input class="input-filter-block" id="datepicker" placeholder="Дата" disabled>
+                <span>по</span>
+                <input class="input-filter-block" id="datepicker-one" placeholder="Дата" disabled>
             </div>
         </div>
         <div class="options-table">
