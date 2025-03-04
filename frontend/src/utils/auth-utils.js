@@ -1,6 +1,9 @@
+import config from "../../config/config";
+
 export class AuthUtils {
     static tokensKey = 'tokens';
     static userKey = 'user';
+
 
     static setTokens(tokens) {
         localStorage.setItem(this.tokensKey, JSON.stringify((tokens)));
@@ -25,4 +28,6 @@ export class AuthUtils {
             }
         }
     }
+
+
 }

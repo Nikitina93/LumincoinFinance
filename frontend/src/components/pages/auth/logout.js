@@ -7,7 +7,7 @@ export class Logout {
         this.openNewRoute = openNewRoute;
 
 
-        if (!AuthUtils.getAuthInfo(AuthUtils.userKey) || !AuthUtils.getAuthInfo(AuthUtils.tokensKey)) {
+        if (!AuthUtils.getAuthInfo(AuthUtils.tokensKey)) {
             return this.openNewRoute('/login');
         }
 

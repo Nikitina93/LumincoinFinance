@@ -92,7 +92,9 @@ export class Options {
             allButton.classList.remove('active');
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
+            inputDate.value = '';
             inputDateFirst.disabled =true;
+            inputDateFirst.value = '';
         });
 
         weekButton.addEventListener('click', function () {
@@ -103,7 +105,9 @@ export class Options {
             allButton.classList.remove('active');
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
+            inputDate.value = '';
             inputDateFirst.disabled =true;
+            inputDateFirst.value = '';
         });
 
         monthButton.addEventListener('click', function () {
@@ -114,7 +118,9 @@ export class Options {
             allButton.classList.remove('active');
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
+            inputDate.value = '';
             inputDateFirst.disabled =true;
+            inputDateFirst.value = '';
         });
 
         yearButton.addEventListener('click', function () {
@@ -125,7 +131,9 @@ export class Options {
             allButton.classList.remove('active');
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
+            inputDate.value = '';
             inputDateFirst.disabled =true;
+            inputDateFirst.value = '';
         });
 
         allButton.addEventListener('click', function () {
@@ -136,7 +144,9 @@ export class Options {
             yearButton.classList.remove('active');
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
+            inputDate.value = '';
             inputDateFirst.disabled =true;
+            inputDateFirst.value = '';
         });
 
         intervalButton.addEventListener('click', function () {

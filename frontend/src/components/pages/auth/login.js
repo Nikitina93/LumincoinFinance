@@ -60,6 +60,13 @@ export class Login {
                     accessToken: result.response.tokens.accessToken,
                     refreshToken: result.response.tokens.refreshToken
                 }
+            );
+            AuthUtils.setUser(
+                {
+                    name: result.response.user.name,
+                    lastname: result.response.user.lastName,
+                    id: result.response.user.id
+                }
             )
 
             this.openNewRoute('/');
