@@ -57,7 +57,9 @@ export class Login {
 
             AuthUtils.setTokens(
                 {
-                    accessToken: result.response.tokens.accessToken,
+                    accessToken: result.response.tokens.accessToken
+                },
+                {
                     refreshToken: result.response.tokens.refreshToken
                 }
             );

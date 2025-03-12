@@ -1,0 +1,76 @@
+<section class="options section">
+        <div class="operations-title-block title-block">
+            <h1 class="operations-title title">Доходы и расходы</h1>
+        </div>
+        <div class="operations-active">
+            <button class="btn-action green-btn" type="button" id="creating-income">Создать доход</button>
+            <button class="btn-action red-btn" type="button" id="creating-expense">Создать расход</button>
+        </div>
+        <div class="main-filter options-filter d-flex flex-row flex-wrap align-items-center">
+            <div class="main-filter-block">
+                <button class="filter-button btn  border-secondary w-100 " type="button"
+                        id="main-button-today" data-period="today">Сегодня
+                </button>
+            </div>
+            <div class="main-filter-block">
+                <button class="filter-button btn border-secondary w-100" type="button"
+                        id="main-button-week" data-period="week">
+                    Неделя
+                </button>
+            </div>
+            <div class="main-filter-block">
+                <button class="filter-button btn border-secondary w-100" type="button"
+                        id="main-button-month" data-period="month">
+                    Месяц
+                </button>
+            </div>
+            <div class="main-filter-block">
+                <button class="filter-button btn border-secondary w-100" type="button"
+                        id="main-button-year" data-period="year">Год
+                </button>
+            </div>
+            <div class="main-filter-block">
+                <button class="filter-button btn border-secondary w-100" type="button" id="main-button-all"
+                        data-period="all">
+                    Все
+                </button>
+            </div>
+            <div class="main-filter-block">
+                <button class="filter-button btn border-secondary w-100" type="button"
+                        id="main-button-interval" data-period="interval">
+                    Интервал
+                </button>
+            </div>
+            <div class="main-filter-block d-flex">
+                <span>с</span>
+                <input class="input-filter-block" id="datepicker" placeholder="Дата" disabled>
+                <span>по</span>
+                <input class="input-filter-block" id="datepicker-one" placeholder="Дата" disabled>
+            </div>
+        </div>
+        <div class="options-table">
+            <div class="table-option number-option">№ операции</div>
+            <div class="table-option type-option">Тип</div>
+            <div class="table-option category-option">Категория</div>
+            <div class="table-option sum-option">Сумма</div>
+            <div class="table-option date-option">Дата</div>
+            <div class="table-option comment-option">Комментарий</div>
+            <div class="table-option action-option">
+
+            </div>
+        </div>
+
+
+    <div class="pop-up" id="pop-up">
+        <div class="pop-up__container">
+            <div class="pop-up__body">
+                <span class="pop-up__text">Вы действительно хотите удалить операцию? </span>
+                <div class="pop-up__action">
+                    <button class="btn-action green-btn" id="agree-button">Да, удалить</button>
+                    <button class="btn-action red-btn" id="not-agree-button">Не удалять</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

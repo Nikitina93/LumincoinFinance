@@ -72,8 +72,6 @@ export class SignUp {
     async signUp() {
         this.commonErrorElement.style.display = 'none';
         if (this.validateForm()) {
-
-
             const result = await HttpUtils.request('/signup', 'POST',{
                 name: this.nameElement.value,
                 lastName: this.lastNameElement.value,
@@ -89,17 +87,7 @@ export class SignUp {
                 return;
             }
 
-            AuthUtils.setUser(
-                {
-                    name: result.response.user.name,
-                    lastName: result.response.user.lastName,
-                    id: result.response.user.id,
-                    email: result.response.user.email
-                }
-            );
-
-
-            this.openNewRoute('/');
+            this.openNewRoute('/login');
         }
 
 

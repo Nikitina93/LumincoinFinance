@@ -1,5 +1,8 @@
+import {HttpUtils} from "../../../utils/http-utils";
+
 export class Incomes {
     constructor() {
+
 
         this.init();
         this.createElement();
@@ -56,5 +59,6 @@ export class Incomes {
         collapse.classList.add('show');
 
     }
+
 
 }

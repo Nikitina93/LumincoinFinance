@@ -1,4 +1,6 @@
-export class Options {
+import {HttpUtils} from "../../../utils/http-utils";
+
+export class Operations {
     constructor() {
         this.creatingIncome = document.getElementById('creating-income');
         this.creatingExpense = document.getElementById('creating-expense');
@@ -13,13 +15,13 @@ export class Options {
 
     createIncome() {
         this.creatingIncome.addEventListener('click', function () {
-            location.href = '/creat-option';
+            location.href = '/creat-operation';
         })
     }
 
     editIncomeExpenses() {
         this.creatingExpense.addEventListener('click', function () {
-            location.href = '/creat-option';
+            location.href = '/creat-operation';
         })
     }
 
@@ -159,5 +161,21 @@ export class Options {
             inputDate.removeAttribute('disabled');
             inputDateFirst.removeAttribute('disabled');
         });
+    }
+
+    async getOptions(){
+        const result = await HttpUtils.request('/operations');
+
+        if (result.error || !result.response || (result.response &&
+            (result.response.error || !result.response.operations))) {
+            return alert('Возникла ошибка при запросе доходов и расходов. Обратитесь в поддержку');
+        }
+        this.showRecords(result.response.operations);
+
+
+    }
+
+    showRecords(operations){
+        console.log(operations);
     }
 }
