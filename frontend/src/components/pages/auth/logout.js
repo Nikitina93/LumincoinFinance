@@ -7,7 +7,7 @@ export class Logout {
         this.openNewRoute = openNewRoute;
 
 
-        if (!AuthUtils.getAuthInfo(AuthUtils.tokensKey)) {
+        if (!localStorage.getItem('user') || !localStorage.getItem('refreshToken')) {
             return this.openNewRoute('/login');
         }
 
@@ -16,7 +16,7 @@ export class Logout {
 
     async logout() {
         await HttpUtils.request('/logout', 'POST',{
-            tokens: AuthUtils.getAuthInfo(AuthUtils.tokensKey),
+            refreshToken: AuthUtils.getAuthInfo(AuthUtils.refreshTokenKey),
         });
 
 

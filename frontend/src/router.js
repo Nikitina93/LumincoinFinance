@@ -20,6 +20,8 @@ export class Router {
         this.profileElement = document.getElementById('profile');
         this.profileUserElement = document.getElementById('profile-user');
 
+
+
         this.initEvents();
 
         this.routes = [
@@ -187,19 +189,26 @@ export class Router {
                 if (newRoute.useLayout) {
                     this.contentPageElement.innerHTML = await fetch(newRoute.useLayout).then(response => response.text());
                     contentBlock = document.getElementById('content-layout');
+                    const userInfo = AuthUtils.getUserInfo();
+
+                    if (userInfo && userInfo.name && userInfo.lastName) {
+                        this.profileUserElement.innerText = `${userInfo.name} ${userInfo.lastName}`;
+                    }
                 } else {
                     this.contentPageElement = document.getElementById('content');
                 }
+
                 contentBlock.innerHTML = await fetch(newRoute.filePathTemplate).then(response => response.text());
             }
             if (newRoute.load && typeof newRoute.load === 'function') {
-                const userInfo = AuthUtils.getUserInfo();
-                const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
-                if (userInfo && accessToken) {
-                    this.profileElement.style.display = 'flex';
-                    this.profileUserElement.innerText = userInfo.name + ' ' + userInfo.lastName;
-                }
+
                 newRoute.load();
+            }
+            const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
+            if (accessToken && newRoute.route !== '/login' || newRoute.route !== '/signup') {
+                location.href = '/';
+            }else{
+                location.href = '/login';
             }
         } else {
             console.log('No route found');

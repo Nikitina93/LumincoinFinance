@@ -42,7 +42,7 @@ export class AuthUtils {
     }
 
     static getUserInfo(){
-        const userInfo = localStorage.getItem('userKey');
+        const userInfo = localStorage.getItem(this.userKey);
         if(userInfo){
             return JSON.parse(userInfo);
         }
