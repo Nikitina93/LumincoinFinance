@@ -51,7 +51,7 @@ export class SignUp {
             isValid = false;
         }
 
-        if (this.passwordElement.value && this.passwordElement.value.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,}$/)) {
+        if (this.passwordElement.value && this.passwordElement.value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/)) {
             this.passwordElement.classList.remove('is-invalid');
         } else {
             this.passwordElement.classList.add('is-invalid');

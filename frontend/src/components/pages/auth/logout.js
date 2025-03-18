@@ -7,7 +7,7 @@ export class Logout {
         this.openNewRoute = openNewRoute;
 
 
-        if (!localStorage.getItem('user') || !localStorage.getItem('refreshToken')) {
+        if (!localStorage.getItem('refreshToken')) {
             return this.openNewRoute('/login');
         }
 

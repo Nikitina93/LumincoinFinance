@@ -66,7 +66,7 @@ export class Login {
             AuthUtils.setUser(
                 {
                     name: result.response.user.name,
-                    lastname: result.response.user.lastName,
+                    lastName: result.response.user.lastName,
                     id: result.response.user.id
                 }
             )

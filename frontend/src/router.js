@@ -17,8 +17,6 @@ export class Router {
     constructor() {
         this.titlePageElement = document.getElementById('title');
         this.contentPageElement = document.getElementById('content');
-        this.profileElement = document.getElementById('profile');
-        this.profileUserElement = document.getElementById('profile-user');
 
 
 
@@ -189,11 +187,7 @@ export class Router {
                 if (newRoute.useLayout) {
                     this.contentPageElement.innerHTML = await fetch(newRoute.useLayout).then(response => response.text());
                     contentBlock = document.getElementById('content-layout');
-                    const userInfo = AuthUtils.getUserInfo();
 
-                    if (userInfo && userInfo.name && userInfo.lastName) {
-                        this.profileUserElement.innerText = `${userInfo.name} ${userInfo.lastName}`;
-                    }
                 } else {
                     this.contentPageElement = document.getElementById('content');
                 }
@@ -201,15 +195,20 @@ export class Router {
                 contentBlock.innerHTML = await fetch(newRoute.filePathTemplate).then(response => response.text());
             }
             if (newRoute.load && typeof newRoute.load === 'function') {
-
+                const userInfo = AuthUtils.getUserInfo();
+                const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
+                if(userInfo && accessToken){
+                    document.getElementById('profile-user').innerText = userInfo.name + ' ' + userInfo.lastName;
+                }
+                if (!accessToken && newRoute.route !== '/login' && newRoute.route !== '/sign-up') {
+                    return await this.openNewRoute('/login');
+                }
+                if(accessToken && newRoute.route === '/login' && newRoute.route === '/sign-up'){
+                    return await this.openNewRoute('/')
+                }
                 newRoute.load();
             }
-            const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
-            if (accessToken && newRoute.route !== '/login' || newRoute.route !== '/signup') {
-                location.href = '/';
-            }else{
-                location.href = '/login';
-            }
+
         } else {
             console.log('No route found');
             history.pushState({}, '', '/');  // чтобы в историю браузера добавить url-адреса)
