@@ -1,4 +1,4 @@
-body{
+body {
   height: 100vh;
 }
 
@@ -23,7 +23,7 @@ body{
   padding: 60px 20px 0 20px;
 }
 
-.btn-toggle:not(.collapsed) svg {
+.btn-toggle:not(.collapsed) svg{
   transform: rotate(90deg);
 }
 
@@ -32,23 +32,13 @@ body{
   transform: rotate(0deg);
 }
 
-.btn:focus {
-  box-shadow: none;
-  background: #0D6EFD;
-  border-top: 1px solid #0D6EFD;
-  border-right: 1px solid #0D6EFD;
-  border-left: 1px solid#0D6EFD;
-  color: #ffffff;
-}
-
-.active-block {
-  border: 1px solid #0D6EFD;
-  border-radius: 6px;
-}
-
 .path-svg {
   margin-left: 72px;
 }
+.active svg path{
+  fill: #FFFFFF;
+}
+
 
 .sidebar-balance {
   padding: 10px 10px 20px 20px;
@@ -73,17 +63,14 @@ body{
   border-color: #d9d9d9;
 }
 
-.nav-item{
+.nav-item {
   border: none;
   border-radius: 5px;
 }
 
+
 .link-custom {
   color: #052c65;
-}
-
-.sidebar .nav-link:focus path {
-  fill: #ffffff;
 }
 
 .nav-item:hover {
@@ -93,15 +80,14 @@ body{
 .nav-item:hover a {
   color: #FFFFFF;
 }
-
-
 .nav-item:hover button {
   color: #FFFFFF;
 }
-
 .nav-item:hover svg path {
   fill: #FFFFFF;
 }
+
+
 
 .collapse {
   border-top: none;
@@ -115,17 +101,17 @@ body{
   color: #0D6EFD !important;
 }
 
-.collapse-item:hover a{
+.collapse-item:hover a {
   background: #0D6EFD;
   color: #FFFFFF;
 }
 
-.btn.disabled, .btn:disabled, fieldset:disabled .btn{
+.btn.disabled, .btn:disabled, fieldset:disabled .btn {
   background-color: #72a5f1;
   border: #72a5f1;;
 }
 
-.dropdown-toggle::after{
+.dropdown-toggle::after {
   content: none;
 }
 
@@ -135,8 +121,37 @@ body{
   }
 }
 
-.dropdown-menu{
+.dropdown-menu {
   &:not(.show) {
     display: none;
   }
+}
+
+.user-info-item {
+  margin-left: 16px;
+}
+
+.dropdown-item{
+  display: flex;
+}
+
+.dropdown-item-text {
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  color: #052C65;
+}
+
+.dropdown-item-svg {
+  width: 15px;
+}
+.dropdown-item:hover{
+  background-color: #0D6EFD;
+}
+
+.dropdown-item:hover span{
+  color: #FFFFFF;
+}
+.dropdown-item:hover svg path{
+  fill: #FFFFFF;
 }

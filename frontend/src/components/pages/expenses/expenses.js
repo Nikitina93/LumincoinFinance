@@ -3,9 +3,10 @@ export class Expenses{
         this.init();
         this.createElement();
         this.editIncome();
+        this.activateBlock();
     }
 
-    init() {
+    init () {
         this.deleteButton = document.getElementById('delete');
         this.notAgreeButton = document.getElementById('not-agree-button');
         this.creationElement = document.getElementById('creation');
@@ -38,4 +39,21 @@ export class Expenses{
             location.href = '/edit-expenses';
         })
     }
+
+    activateBlock(){
+        const categoryButton = document.getElementById('toggle');
+        const collapse = document.getElementById('dashboard-collapse');
+        const expensesCollapse = document.getElementById('expenses-collapse');
+        const svgCollapse = document.getElementById('collapsed-svg');
+        categoryButton.onclick
+        categoryButton.setAttribute("aria-expanded", "true");
+        categoryButton.classList.remove('collapsed');
+        categoryButton.style.borderRadius = '5px 5px 0px 0px';
+        categoryButton.classList.add('active');
+        svgCollapse.classList.add('active');
+        expensesCollapse.classList.add('active');
+        collapse.classList.add('show');
+    }
+
+
 }

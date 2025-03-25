@@ -5,18 +5,19 @@ import {EditIncome} from "./components/pages/incomes/edit-income";
 import {Expenses} from "./components/pages/expenses/expenses";
 import {CreatExpenses} from "./components/pages/expenses/creat-expenses";
 import {EditExpenses} from "./components/pages/expenses/edit-expenses";
-import {Options} from "./components/pages/options/options";
-import {CreatOption} from "./components/pages/options/creat-option";
-import {EditOption} from "./components/pages/options/edit-option";
-import {Layout} from "./components/layout";
+import {Operations} from "./components/pages/options/operations";
+import {CreatOperation} from "./components/pages/options/creat-operation";
+import {EditOperation} from "./components/pages/options/edit-operation";
 import {Login} from "./components/pages/auth/login";
 import {SignUp} from "./components/pages/auth/sign-up";
 import {Logout} from "./components/pages/auth/logout";
+import {AuthUtils} from "./utils/auth-utils";
 
 export class Router {
     constructor() {
         this.titlePageElement = document.getElementById('title');
         this.contentPageElement = document.getElementById('content');
+
 
 
         this.initEvents();
@@ -29,7 +30,6 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 load: () => {
                     new Main();
-                    new Layout();
                 }
             },
             {
@@ -111,30 +111,30 @@ export class Router {
                 }
             },
             {
-                route: '/options',
+                route: '/operations',
                 title: 'Доходы & Расходы',
-                filePathTemplate: '/templates/pages/options/options.html',
+                filePathTemplate: '/templates/pages/operations/operations.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Options();
+                    new Operations();
                 }
             },
             {
-                route: '/creat-option',
+                route: '/creat-operation',
                 title: 'Создание дохода/расхода',
-                filePathTemplate: '/templates/pages/options/creat-option.html',
+                filePathTemplate: '/templates/pages/operations/creat-operation.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new CreatOption();
+                    new CreatOperation();
                 }
             },
             {
-                route: '/edit-option',
+                route: '/edit-operation',
                 title: 'Редактирование дохода/расхода',
-                filePathTemplate: '/templates/pages/options/edit-option.html',
+                filePathTemplate: '/templates/pages/operations/edit-operation.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new EditOption();
+                    new EditOperation();
                 }
             },
         ];
@@ -187,14 +187,28 @@ export class Router {
                 if (newRoute.useLayout) {
                     this.contentPageElement.innerHTML = await fetch(newRoute.useLayout).then(response => response.text());
                     contentBlock = document.getElementById('content-layout');
+
                 } else {
                     this.contentPageElement = document.getElementById('content');
                 }
+
                 contentBlock.innerHTML = await fetch(newRoute.filePathTemplate).then(response => response.text());
             }
             if (newRoute.load && typeof newRoute.load === 'function') {
+                const userInfo = AuthUtils.getUserInfo();
+                const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
+                if(userInfo && accessToken){
+                    document.getElementById('profile-user').innerText = userInfo.name + ' ' + userInfo.lastName;
+                }
+                if (!accessToken && newRoute.route !== '/login' && newRoute.route !== '/sign-up') {
+                    return await this.openNewRoute('/login');
+                }
+                if(accessToken && newRoute.route === '/login' && newRoute.route === '/sign-up'){
+                    return await this.openNewRoute('/')
+                }
                 newRoute.load();
             }
+
         } else {
             console.log('No route found');
             history.pushState({}, '', '/');  // чтобы в историю браузера добавить url-адреса)

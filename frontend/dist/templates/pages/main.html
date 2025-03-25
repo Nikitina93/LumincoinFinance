@@ -1,73 +1,68 @@
 <section class="main section">
-        <div class="main-title title-block">
-            <h1 class="main-title title">Главная</h1>
+    <div class="main-title title-block">
+        <h1 class="main-title title">Главная</h1>
+    </div>
+    <div class="main-filter d-flex flex-row flex-wrap align-items-center " id="filters-container">
+        <div class="main-filter-block">
+            <button class="filter-button btn border-secondary w-100" type="button"
+                    id="main-button-today" data-period="today">Сегодня
+            </button>
         </div>
-        <div class="main-filter d-flex flex-row flex-wrap align-items-center " id="filters-container">
-            <div class="main-filter-block">
-                <button class="filter-button btn btn-secondary border-secondary w-100 active" type="button"
-                        id="main-button-today" data-period="today">Сегодня
-                </button>
-            </div>
-            <div class="main-filter-block">
-                <button class="filter-button btn border-secondary w-100" type="button"
-                        id="main-button-week" data-period="week">
-                    Неделя
-                </button>
-            </div>
-            <div class="main-filter-block">
-                <button class="filter-button btn border-secondary w-100" type="button"
-                        id="main-button-month" data-period="month">
-                    Месяц
-                </button>
-            </div>
-            <div class="main-filter-block">
-                <button class="filter-button btn border-secondary w-100" type="button"
-                        id="main-button-year" data-period="year">Год
-                </button>
-            </div>
-            <div class="main-filter-block">
-                <button class="filter-button btn border-secondary w-100" type="button" id="main-button-all"
-                        data-period="all">
-                    Все
-                </button>
-            </div>
-            <div class="main-filter-block">
-                <button class="filter-button btn border-secondary w-100" type="button"
-                        id="main-button-interval" data-period="interval">
-                    Интервал
-                </button>
-            </div>
-            <div class="main-filter-block d-flex">
-                <span> с </span>
-                <button class="date-interval filter-button btn border-secondary w-100" type="button"
-                        id="start-interval" data-period="interval"> Дата
-                </button>
-            </div>
-            <div class="main-filter-block d-flex">
-                <span> по </span>
-                <button class="date-interval filter-button btn border-secondary w-100" type="button"
-                        id="end-interval" data-period="interval"> Дата
-                </button>
-            </div>
+        <div class="main-filter-block">
+            <button class="filter-button btn border-secondary w-100" type="button"
+                    id="main-button-week" data-period="week">
+                Неделя
+            </button>
+        </div>
+        <div class="main-filter-block">
+            <button class="filter-button btn border-secondary w-100" type="button"
+                    id="main-button-month" data-period="month">
+                Месяц
+            </button>
+        </div>
+        <div class="main-filter-block">
+            <button class="filter-button btn border-secondary w-100" type="button"
+                    id="main-button-year" data-period="year">Год
+            </button>
+        </div>
+        <div class="main-filter-block">
+            <button class="filter-button btn border-secondary w-100" type="button" id="main-button-all"
+                    data-period="all">
+                Все
+            </button>
+        </div>
+        <div class="main-filter-block">
+            <button class="filter-button btn border-secondary w-100" type="button"
+                    id="main-button-interval" data-period="interval">
+                Интервал
+            </button>
+        </div>
+        <div class="main-filter-block d-flex">
+            <span>с</span>
+            <input class="input-filter-block" id="datepicker-first" placeholder="Дата" disabled>
+            <span>по</span>
+            <input class="input-filter-block" id="datepicker-second" placeholder="Дата" disabled>
+        </div>
 
-        </div>
-        <div class="main-charts d-flex">
-            <div class="chart-income-block w-100">
-                <h3 class="chart-income-title text-center mb-2">Доходы</h3>
-                <div class="chart-income bg-border-light border-end w-100">
-                    <div class="card-body text-center">
-                        <canvas id="myChart" width="400"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="chart-expenses-block w-100">
-                <h3 class="chart-expenses-title text-center mb-2">Расходы</h3>
-                <div class="chart-expenses w-100">
-                    <div class="card-body text-center">
-                        <canvas id="myPieChart" width="400"></canvas>
-                    </div>
+
+    </div>
+    <div class="main-charts d-flex">
+        <div class="chart-income-block w-100">
+            <h3 class="chart-income-title text-center mb-2">Доходы</h3>
+            <div class="chart-income bg-border-light border-end w-100">
+                <div class="card-body text-center">
+                    <canvas id="myChart" width="400"></canvas>
                 </div>
             </div>
         </div>
+        <div class="chart-expenses-block w-100">
+            <h3 class="chart-expenses-title text-center mb-2">Расходы</h3>
+            <div class="chart-expenses w-100">
+                <div class="card-body text-center">
+                    <canvas id="myPieChart" width="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </section>

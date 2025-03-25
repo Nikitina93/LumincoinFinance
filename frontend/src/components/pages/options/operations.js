@@ -1,47 +1,37 @@
-export class Main {
+import {HttpUtils} from "../../../utils/http-utils";
+
+export class Operations {
     constructor() {
-        this.pieChart();
+        this.creatingIncome = document.getElementById('creating-income');
+        this.creatingExpense = document.getElementById('creating-expense');
+
+
+        this.createIncome();
+        this.editIncomeExpenses();
         this.dateSelection();
         this.activateBlock();
         this.activateButton();
     }
 
-    pieChart() {
-        const myChart = document.getElementById('myChart');
-        let legend = {
-            labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
-            datasets: [{
-                data: [12, 19, 3, 5, 2],
-                backgroundColor: ['#DC3545', '#FD7E14', '#FFC107', '#20C997', '#0D6EFD'],
-            }]
-        }
-        let newChart = new Chart(myChart, {
-            type: 'pie',
-            data: legend
+    createIncome() {
+        this.creatingIncome.addEventListener('click', function () {
+            location.href = '/creat-operation';
         })
+    }
 
-
-        const myChartSecond = document.getElementById('myPieChart');
-        let legendSecond = {
-            labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
-            datasets: [{
-                data: [12, 19, 3, 5, 2],
-                backgroundColor: ['#DC3545', '#FD7E14', '#FFC107', '#20C997', '#0D6EFD'],
-            }]
-        }
-        let ChartSecond = new Chart(myChartSecond, {
-            type: 'pie',
-            data: legendSecond
+    editIncomeExpenses() {
+        this.creatingExpense.addEventListener('click', function () {
+            location.href = '/creat-operation';
         })
     }
 
     dateSelection() {
         $(function () {
-            $("#datepicker-first").datepicker({
+            $("#datepicker").datepicker({
                 dateFormat: 'dd-mm-yy',
                 language: 'russian'
             });
-            $("#datepicker-second").datepicker({
+            $("#datepicker-one").datepicker({
                 dateFormat: 'dd-mm-yy',
             });
         });
@@ -68,17 +58,18 @@ export class Main {
     }
 
     activateBlock() {
-        const mainButton = document.getElementById('main');
-        const svgMain = document.getElementById('svg-main');
+
         const categoryButton = document.getElementById('toggle');
+        const optionsButton = document.getElementById('options');
+        const svgOptions = document.getElementById('svg-options');
         const svgCollapse = document.getElementById('collapsed-svg');
-        mainButton.onclick
-        mainButton.classList.add('active');
-        svgMain.classList.add('active');
+        optionsButton.onclick
+        optionsButton.classList.add('active');
+        svgOptions.classList.add('active')
 
         categoryButton.addEventListener('click', function () {
-            mainButton.classList.remove('active');
-            svgMain.classList.remove('active');
+            optionsButton.classList.remove('active');
+            svgOptions.classList.remove('active');
             categoryButton.classList.add('active');
             categoryButton.style.borderRadius = '5px 5px 0px 0px';
             svgCollapse.classList.add('active');
@@ -92,8 +83,8 @@ export class Main {
         const yearButton = document.getElementById('main-button-year');
         const allButton = document.getElementById('main-button-all');
         const intervalButton = document.getElementById('main-button-interval');
-        const inputDate = document.getElementById('datepicker-first');
-        const inputDateFirst = document.getElementById('datepicker-second');
+        const inputDate = document.getElementById('datepicker');
+        const inputDateFirst = document.getElementById('datepicker-one');
 
         todayButton.addEventListener('click', function () {
             todayButton.classList.add('active');
@@ -170,5 +161,21 @@ export class Main {
             inputDate.removeAttribute('disabled');
             inputDateFirst.removeAttribute('disabled');
         });
+    }
+
+    async getOptions(){
+        const result = await HttpUtils.request('/operations');
+
+        if (result.error || !result.response || (result.response &&
+            (result.response.error || !result.response.operations))) {
+            return alert('Возникла ошибка при запросе доходов и расходов. Обратитесь в поддержку');
+        }
+        this.showRecords(result.response.operations);
+
+
+    }
+
+    showRecords(operations){
+        console.log(operations);
     }
 }

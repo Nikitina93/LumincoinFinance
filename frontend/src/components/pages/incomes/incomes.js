@@ -1,9 +1,13 @@
-export class Incomes{
+import {HttpUtils} from "../../../utils/http-utils";
+
+export class Incomes {
     constructor() {
+
 
         this.init();
         this.createElement();
         this.editIncome();
+        this.activateBlock();
     }
 
     init() {
@@ -34,10 +38,27 @@ export class Incomes{
         })
     }
 
-    editIncome(){
-        this.editElement.addEventListener('click', function (){
+    editIncome() {
+        this.editElement.addEventListener('click', function () {
             location.href = '/edit-income';
         })
     }
+
+    activateBlock() {
+        const categoryButton = document.getElementById('toggle');
+        const collapse = document.getElementById('dashboard-collapse');
+        const incomesCollapse = document.getElementById('incomes-collapse');
+        const svgCollapse = document.getElementById('collapsed-svg');
+        categoryButton.onclick;
+        categoryButton.setAttribute("aria-expanded", "true");
+        categoryButton.classList.remove('collapsed');
+        categoryButton.style.borderRadius = '5px 5px 0px 0px';
+        categoryButton.classList.add('active');
+        svgCollapse.classList.add('active');
+        incomesCollapse.classList.add('active');
+        collapse.classList.add('show');
+
+    }
+
 
 }
