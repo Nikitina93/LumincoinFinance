@@ -6,32 +6,6 @@ export class AuthUtils {
     static userKey = 'user';
 
 
-    static async processUnauthorizedResponse() {
-        const refreshToken = localStorage.getItem(this.refreshTokenKey);
-        if (refreshToken) {
-            const response = await fetch(config.api + '/refresh', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify({refreshToken: refreshToken})
-            });
-
-            if (response && response.status === 200) {
-                const result = await response.json();
-                if (result && !result.error) {
-                    this.setTokens(result.accessToken, result.refreshToken);
-                    return true;
-                }
-            }
-        }
-        this.removeAuthInfo();
-        location.href = '/login';
-
-        return false;
-    }
-
     static setTokens(accessToken, refreshToken) {
         localStorage.setItem(this.accessTokenKey, JSON.stringify((accessToken)));
         localStorage.setItem(this.refreshTokenKey, JSON.stringify((refreshToken)));
@@ -41,9 +15,9 @@ export class AuthUtils {
         localStorage.setItem(this.userKey, JSON.stringify((user)));
     }
 
-    static getUserInfo(){
+    static getUserInfo() {
         const userInfo = localStorage.getItem(this.userKey);
-        if(userInfo){
+        if (userInfo) {
             return JSON.parse(userInfo);
         }
         return null;
@@ -67,5 +41,29 @@ export class AuthUtils {
         }
     }
 
-
+    static async updateRefreshToken() {
+        let result = false;
+        const refreshToken = this.getAuthInfo(this.refreshTokenKey);
+        if (refreshToken) {
+           const response = await fetch(config.api + '/refresh', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({refreshToken: refreshToken})
+            });
+           if(response && response.status === 200){
+               const tokens = await response.json();
+               if(tokens && !tokens.error){
+                   this.setTokens(tokens.accessToken, tokens.refreshToken);
+                   result = true;
+               }
+           }
+        }
+        if(!result){
+            this.removeAuthInfo()
+        }
+        return result;
+    }
 }

@@ -5,9 +5,9 @@ import {EditIncome} from "./components/pages/incomes/edit-income";
 import {Expenses} from "./components/pages/expenses/expenses";
 import {CreatExpenses} from "./components/pages/expenses/creat-expenses";
 import {EditExpenses} from "./components/pages/expenses/edit-expenses";
-import {Operations} from "./components/pages/options/operations";
-import {CreatOperation} from "./components/pages/options/creat-operation";
-import {EditOperation} from "./components/pages/options/edit-operation";
+import {Operations} from "./components/pages/operations/operations";
+import {CreatOperation} from "./components/pages/operations/creat-operation";
+import {EditOperation} from "./components/pages/operations/edit-operation";
 import {Login} from "./components/pages/auth/login";
 import {SignUp} from "./components/pages/auth/sign-up";
 import {Logout} from "./components/pages/auth/logout";
@@ -116,7 +116,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/operations/operations.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Operations();
+                    new Operations(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -195,17 +195,17 @@ export class Router {
                 contentBlock.innerHTML = await fetch(newRoute.filePathTemplate).then(response => response.text());
             }
             if (newRoute.load && typeof newRoute.load === 'function') {
-                const userInfo = AuthUtils.getUserInfo();
-                const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
-                if(userInfo && accessToken){
-                    document.getElementById('profile-user').innerText = userInfo.name + ' ' + userInfo.lastName;
-                }
-                if (!accessToken && newRoute.route !== '/login' && newRoute.route !== '/sign-up') {
-                    return await this.openNewRoute('/login');
-                }
-                if(accessToken && newRoute.route === '/login' && newRoute.route === '/sign-up'){
-                    return await this.openNewRoute('/')
-                }
+                // const userInfo = AuthUtils.getUserInfo();
+                // const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
+                // if(userInfo && accessToken){
+                //     document.getElementById('profile-user').innerText = userInfo.name + ' ' + userInfo.lastName;
+                // }
+                // if (!accessToken && newRoute.route !== '/login' && newRoute.route !== '/sign-up') {
+                //     return await this.openNewRoute('/login');
+                // }
+                // if(accessToken && newRoute.route === '/login' && newRoute.route === '/sign-up'){
+                //     return await this.openNewRoute('/')
+                // }
                 newRoute.load();
             }
 
