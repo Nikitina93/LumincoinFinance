@@ -1,4 +1,5 @@
 import {HttpUtils} from "../../../utils/http-utils";
+import config from "../../../../config/config";
 
 export class Operations {
     constructor(openNewRoute) {
@@ -15,23 +16,44 @@ export class Operations {
         this.getOperations().then();
     }
 
-    async getOperations(){
-        const result = await HttpUtils.request('/operations');
-        if(result.redirect){
-            return this.openNewRoute(result.redirect);
-        }
-
-        if (result.error || !result.response || (result.response && result.response.error )) {
-            return alert('Возникла ошибка при запросе доходов и расходов. Обратитесь в поддержку');
-        }
-        this.showRecords(result.response);
+    async getOperations() {
+        // const result = await HttpUtils.request('/operations');
+        // if(result.redirect){
+        //     return this.openNewRoute(result.redirect);
+        // }
+        //
+        // if (result.error || !result.response || (result.response && result.response.error )) {
+        //     return alert('Возникла ошибка при запросе доходов и расходов. Обратитесь в поддержку');
+        // }
+        // this.showRecords(result.response);
 
 
     }
 
-    showRecords(operations){
-        console.log(operations);
+    showRecords(operations) {
+        const recordsElement = document.getElementById('records');
+        for (let i = 0; i < operations.length; i++) {
+            const trElement = document.createElement('tr');
+            trElement.insertCell().innerText = i + 1;
+
+            let typeHtml = null;
+            switch (operations[i].type) {
+                case config.operationsTypes.expense:
+                    typeHtml = '<span class ="text-danger">расход</span>';
+                    break;
+                case config.operationsTypes.income:
+                    typeHtml = '<span class ="text-success">доход</span>';
+
+                    break;
+                default:
+                    typeHtml = '<span class ="text-secondary">неизвестно</span>';
+            }
+            trElement.insertCell().innerText = typeHtml;
+
+        }
     }
+
+
     createIncome() {
         this.creatingIncome.addEventListener('click', function () {
             location.href = '/creat-operation';
@@ -114,7 +136,7 @@ export class Operations {
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
             inputDate.value = '';
-            inputDateFirst.disabled =true;
+            inputDateFirst.disabled = true;
             inputDateFirst.value = '';
         });
 
@@ -127,7 +149,7 @@ export class Operations {
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
             inputDate.value = '';
-            inputDateFirst.disabled =true;
+            inputDateFirst.disabled = true;
             inputDateFirst.value = '';
         });
 
@@ -140,7 +162,7 @@ export class Operations {
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
             inputDate.value = '';
-            inputDateFirst.disabled =true;
+            inputDateFirst.disabled = true;
             inputDateFirst.value = '';
         });
 
@@ -153,7 +175,7 @@ export class Operations {
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
             inputDate.value = '';
-            inputDateFirst.disabled =true;
+            inputDateFirst.disabled = true;
             inputDateFirst.value = '';
         });
 
@@ -166,7 +188,7 @@ export class Operations {
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
             inputDate.value = '';
-            inputDateFirst.disabled =true;
+            inputDateFirst.disabled = true;
             inputDateFirst.value = '';
         });
 
