@@ -11,6 +11,7 @@ export class Operations {
         this.dateSelection();
         this.activateBlock();
         this.activateButton();
+        this.getOperations().then();
     }
 
     createIncome() {
@@ -163,14 +164,14 @@ export class Operations {
         });
     }
 
-    async getOptions(){
+    async getOperations(){
         const result = await HttpUtils.request('/operations');
 
-        if (result.error || !result.response || (result.response &&
-            (result.response.error || !result.response.operations))) {
-            return alert('Возникла ошибка при запросе доходов и расходов. Обратитесь в поддержку');
+        if (result.error || !result.response || (result.response && result.response.error)) {
+            return alert('Возникла ошибка при запросе доходоы и расходов')
         }
-        this.showRecords(result.response.operations);
+
+        this.showRecords(result.response)
 
 
     }

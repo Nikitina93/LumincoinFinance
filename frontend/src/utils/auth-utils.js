@@ -27,7 +27,7 @@ export class AuthUtils {
             }
         }
         this.removeAuthInfo();
-        location.href = '/login';
+        // location.href = '/login';
 
         return false;
     }

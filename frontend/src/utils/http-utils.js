@@ -3,11 +3,11 @@ import {AuthUtils} from "./auth-utils";
 
 
 export class HttpUtils {
-    static async request(url, method = "GET", body = null) {
+    static async request(url, method = "GET", useAuth = true, body = null) {
         const result = {
             error: false,
             response: null
-        }
+        };
         const params = {
             method: method,
             headers: {
@@ -15,14 +15,18 @@ export class HttpUtils {
                 'Accept': 'application/json',
             },
         };
-        let token = localStorage.getItem(AuthUtils.accessTokenKey);
-        if(token){
-            params.headers['x-access-token'] = token;
+        let token = null;
+        if (useAuth) {
+            token = localStorage.getItem(AuthUtils.accessTokenKey);
+            if (token) {
+                params.headers['x-auth-token'] = token;
+            }
         }
 
         if (body) {
             params.body = JSON.stringify(body)
         }
+
         let response = null;
         try {
             response = await fetch(config.api + url, params);
@@ -33,11 +37,14 @@ export class HttpUtils {
         }
 
         if (response.status < 200 || response.status >= 300) {
-            if(response.status === 401){
+            if (useAuth && response.status === 401) {
+                if(!token){
+                    return this.openNewRoute('/login');
+                }
                 const result = await AuthUtils.processUnauthorizedResponse();
-                if (result){
-                    return await this.request(url, method, body);
-                }else{
+                if (result) {
+                    return await this.request(url, method, useAuth, body);
+                } else {
                     return null;
                 }
             }
