@@ -6,7 +6,7 @@
             <button class="btn-action green-btn" type="button" id="creating-income">Создать доход</button>
             <button class="btn-action red-btn" type="button" id="creating-expense">Создать расход</button>
         </div>
-        <div class="main-filter operations-filter d-flex flex-row flex-wrap align-items-center">
+        <div class="main-filter options-filter d-flex flex-row flex-wrap align-items-center">
             <div class="main-filter-block">
                 <button class="filter-button btn  border-secondary w-100 " type="button"
                         id="main-button-today" data-period="today">Сегодня
@@ -48,23 +48,17 @@
                 <input class="input-filter-block" id="datepicker-one" placeholder="Дата" disabled>
             </div>
         </div>
+        <div class="options-table">
+            <div class="table-option number-option">№ операции</div>
+            <div class="table-option type-option">Тип</div>
+            <div class="table-option category-option">Категория</div>
+            <div class="table-option sum-option">Сумма</div>
+            <div class="table-option date-option">Дата</div>
+            <div class="table-option comment-option">Комментарий</div>
+            <div class="table-option action-option">
 
-        <table class="operations-table" id="data-table">
-            <thead>
-            <tr>
-                <th class="table-option">№ операции</th>
-                <th class="table-option">Тип</th>
-                <th class="table-option">Категория</th>
-                <th class="table-option">Сумма</th>
-                <th class="table-option">Дата</th>
-                <th class="table-option">Комментарий</th>
-                <th class="table-option"></th>
-            </tr>
-            </thead>
-            <tbody id="records">
-
-            </tbody>
-        </table>
+            </div>
+        </div>
 
 
     <div class="pop-up" id="pop-up">

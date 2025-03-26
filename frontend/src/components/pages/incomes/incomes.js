@@ -57,9 +57,8 @@ export class Incomes {
         svgCollapse.classList.add('active');
         incomesCollapse.classList.add('active');
         collapse.classList.add('show');
+
     }
 
-    showBlockIncome(){
-    }
 
 }

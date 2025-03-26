@@ -15,7 +15,7 @@ export class Logout {
     }
 
     async logout() {
-        await HttpUtils.request('/logout', 'POST', false, {
+        await HttpUtils.request('/logout', 'POST',{
             refreshToken: AuthUtils.getAuthInfo(AuthUtils.refreshTokenKey),
         });
 

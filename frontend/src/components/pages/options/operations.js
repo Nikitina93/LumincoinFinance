@@ -1,9 +1,7 @@
 import {HttpUtils} from "../../../utils/http-utils";
-import config from "../../../../config/config";
 
 export class Operations {
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    constructor() {
         this.creatingIncome = document.getElementById('creating-income');
         this.creatingExpense = document.getElementById('creating-expense');
 
@@ -13,46 +11,7 @@ export class Operations {
         this.dateSelection();
         this.activateBlock();
         this.activateButton();
-        this.getOperations().then();
     }
-
-    async getOperations() {
-        // const result = await HttpUtils.request('/operations');
-        // if(result.redirect){
-        //     return this.openNewRoute(result.redirect);
-        // }
-        //
-        // if (result.error || !result.response || (result.response && result.response.error )) {
-        //     return alert('Возникла ошибка при запросе доходов и расходов. Обратитесь в поддержку');
-        // }
-        // this.showRecords(result.response);
-
-
-    }
-
-    showRecords(operations) {
-        const recordsElement = document.getElementById('records');
-        for (let i = 0; i < operations.length; i++) {
-            const trElement = document.createElement('tr');
-            trElement.insertCell().innerText = i + 1;
-
-            let typeHtml = null;
-            switch (operations[i].type) {
-                case config.operationsTypes.expense:
-                    typeHtml = '<span class ="text-danger">расход</span>';
-                    break;
-                case config.operationsTypes.income:
-                    typeHtml = '<span class ="text-success">доход</span>';
-
-                    break;
-                default:
-                    typeHtml = '<span class ="text-secondary">неизвестно</span>';
-            }
-            trElement.insertCell().innerText = typeHtml;
-
-        }
-    }
-
 
     createIncome() {
         this.creatingIncome.addEventListener('click', function () {
@@ -101,8 +60,8 @@ export class Operations {
     activateBlock() {
 
         const categoryButton = document.getElementById('toggle');
-        const optionsButton = document.getElementById('operations');
-        const svgOptions = document.getElementById('svg-operations');
+        const optionsButton = document.getElementById('options');
+        const svgOptions = document.getElementById('svg-options');
         const svgCollapse = document.getElementById('collapsed-svg');
         optionsButton.onclick
         optionsButton.classList.add('active');
@@ -136,7 +95,7 @@ export class Operations {
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
             inputDate.value = '';
-            inputDateFirst.disabled = true;
+            inputDateFirst.disabled =true;
             inputDateFirst.value = '';
         });
 
@@ -149,7 +108,7 @@ export class Operations {
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
             inputDate.value = '';
-            inputDateFirst.disabled = true;
+            inputDateFirst.disabled =true;
             inputDateFirst.value = '';
         });
 
@@ -162,7 +121,7 @@ export class Operations {
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
             inputDate.value = '';
-            inputDateFirst.disabled = true;
+            inputDateFirst.disabled =true;
             inputDateFirst.value = '';
         });
 
@@ -175,7 +134,7 @@ export class Operations {
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
             inputDate.value = '';
-            inputDateFirst.disabled = true;
+            inputDateFirst.disabled =true;
             inputDateFirst.value = '';
         });
 
@@ -188,7 +147,7 @@ export class Operations {
             intervalButton.classList.remove('active');
             inputDate.disabled = true;
             inputDate.value = '';
-            inputDateFirst.disabled = true;
+            inputDateFirst.disabled =true;
             inputDateFirst.value = '';
         });
 
@@ -204,5 +163,19 @@ export class Operations {
         });
     }
 
+    async getOptions(){
+        const result = await HttpUtils.request('/operations');
 
+        if (result.error || !result.response || (result.response &&
+            (result.response.error || !result.response.operations))) {
+            return alert('Возникла ошибка при запросе доходов и расходов. Обратитесь в поддержку');
+        }
+        this.showRecords(result.response.operations);
+
+
+    }
+
+    showRecords(operations){
+        console.log(operations);
+    }
 }

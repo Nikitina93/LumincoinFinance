@@ -1,9 +1,5 @@
 const config ={
-    api: 'http://localhost:3000/api',
-    operationsTypes: {
-        expense: 'expense',
-        income: 'income'
-    }
+    api: 'http://localhost:3000/api'
 }
 
 export default config;

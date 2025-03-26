@@ -72,7 +72,7 @@ export class SignUp {
     async signUp() {
         this.commonErrorElement.style.display = 'none';
         if (this.validateForm()) {
-            const result = await HttpUtils.request('/signup', 'POST', false, {
+            const result = await HttpUtils.request('/signup', 'POST',{
                 name: this.nameElement.value,
                 lastName: this.lastNameElement.value,
                 email: this.emailElement.value,
@@ -81,8 +81,8 @@ export class SignUp {
             });
 
 
-            if (result.error || !result.response || (result.response && (!result.response.user.name
-                || !result.response.user.lastName || !result.response.user.id || !result.response.user.email))) {
+            if (result.error || !result.response || (result.response && ( !result.response.user.name
+                || !result.response.user.lastName || !result.response.user.id || !result.response.user.email))){
                 this.commonErrorElement.style.display = 'block';
                 return;
             }
