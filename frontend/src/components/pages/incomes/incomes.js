@@ -1,64 +1,72 @@
 import {HttpUtils} from "../../../utils/http-utils";
 
 export class Incomes {
-    constructor() {
+    constructor(openNewRoute) {
 
+        this.openNewRoute = openNewRoute;
 
-        this.init();
-        this.createElement();
-        this.editIncome();
-        this.activateBlock();
+        this.deleteButton = document.getElementById('agree-button');
+        this.notDeleteButton = document.getElementById('not-agree-button');
+        this.popUpElement = document.getElementById('pop-up');
+
+        this.init().then();
     }
 
-    init() {
-        this.deleteButton = document.getElementById('delete');
-        this.notAgreeButton = document.getElementById('not-agree-button');
-        this.creationElement = document.getElementById('creation');
-        this.editElement = document.getElementById('edit');
+
+    async init() {
+        const incomes = await HttpUtils.request('/categories/income', 'GET', true);
+
+        if (incomes.error) {
+            console.log(incomes.response.message);
+            return incomes.redirect ? this.openNewRoute(incomes.redirect) : null;
+        }
+
+        const incomeCategories = document.querySelector('.categories');
+
+        incomes.response.reverse();
+
+        incomes.response.forEach(income => {
+            const cardBox = document.createElement('div');
+            cardBox.classList.add('box');
+
+            const cardBody = document.createElement('div');
+            cardBody.classList.add('card-body');
+
+            const cardTitle = document.createElement('h5');
+            cardTitle.classList.add('card-title');
+            cardTitle.innerText = income.title;
+
+            const editLink = document.createElement('a');
+            editLink.classList.add('btn', 'btn-primary');
+            editLink.innerText = 'Редактировать';
+            editLink.href = `/edit-income?id=${income.id}`;
+
+            const deleteLink = document.createElement('a');
+            deleteLink.classList.add('btn', 'btn-danger', 'btn-delete');
+            deleteLink.innerText = 'Удалить';
 
 
-        this.deleteButton.addEventListener('click', this.openPopUp);
-        this.notAgreeButton.addEventListener('click', this.closePopUp);
+            deleteLink.addEventListener('click', (event) => {
+                event.preventDefault();
+                this.popUpElement.classList.add('active');
+                this.deleteButton.href = `/income/delete?id=${income.id}`
+            });
+
+            this.notDeleteButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                this.popUpElement.classList.remove('active');
+            });
+
+            cardBody.append(cardTitle);
+            cardBody.append(editLink);
+            cardBody.append(deleteLink);
+            cardBox.append(cardBody);
+            incomeCategories.prepend(cardBox);
+
+        });
     }
 
-    openPopUp() {
-        let popUp = document.getElementById('pop-up');
-        popUp.classList.add('open');
 
-    }
-
-    closePopUp() {
-        let popUp = document.getElementById('pop-up');
-        popUp.classList.remove('open');
-    }
-
-    createElement() {
-        this.creationElement.addEventListener('click', function () {
-            location.href = '/creat-income';
-        })
-    }
-
-    editIncome() {
-        this.editElement.addEventListener('click', function () {
-            location.href = '/edit-income';
-        })
-    }
-
-    activateBlock() {
-        const categoryButton = document.getElementById('toggle');
-        const collapse = document.getElementById('dashboard-collapse');
-        const incomesCollapse = document.getElementById('incomes-collapse');
-        const svgCollapse = document.getElementById('collapsed-svg');
-        categoryButton.onclick;
-        categoryButton.setAttribute("aria-expanded", "true");
-        categoryButton.classList.remove('collapsed');
-        categoryButton.style.borderRadius = '5px 5px 0px 0px';
-        categoryButton.classList.add('active');
-        svgCollapse.classList.add('active');
-        incomesCollapse.classList.add('active');
-        collapse.classList.add('show');
-
-    }
 
 
 }

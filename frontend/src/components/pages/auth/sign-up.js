@@ -5,7 +5,7 @@ export class SignUp {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
 
-        if (AuthUtils.getAuthInfo(AuthUtils.userKey)) {
+        if (AuthUtils.getUserInfo(AuthUtils.accessTokenKey)) {
             return this.openNewRoute('/');
         }
 

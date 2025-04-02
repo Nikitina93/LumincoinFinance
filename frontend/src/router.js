@@ -5,13 +5,16 @@ import {EditIncome} from "./components/pages/incomes/edit-income";
 import {Expenses} from "./components/pages/expenses/expenses";
 import {CreatExpenses} from "./components/pages/expenses/creat-expenses";
 import {EditExpenses} from "./components/pages/expenses/edit-expenses";
-import {Operations} from "./components/pages/options/operations";
-import {CreatOperation} from "./components/pages/options/creat-operation";
-import {EditOperation} from "./components/pages/options/edit-operation";
+import {OperationsList} from "./components/pages/operations/operations-list";
+import {CreatOperation} from "./components/pages/operations/creat-operation";
+import {EditOperation} from "./components/pages/operations/edit-operation";
 import {Login} from "./components/pages/auth/login";
 import {SignUp} from "./components/pages/auth/sign-up";
 import {Logout} from "./components/pages/auth/logout";
 import {AuthUtils} from "./utils/auth-utils";
+import {IncomeDelete} from "./components/pages/incomes/incomes-delete";
+import {ExpensesDelete} from "./components/pages/expenses/expenses-delete";
+import {OperationsDelete} from "./components/pages/operations/operations-delete";
 
 export class Router {
     constructor() {
@@ -84,6 +87,12 @@ export class Router {
                 }
             },
             {
+                route: '/income/delete',
+                load: () => {
+                    new IncomeDelete(this.openNewRoute.bind(this));
+                },
+            },
+            {
                 route: '/expenses',
                 title: 'Расходы',
                 filePathTemplate: '/templates/pages/expenses/expenses.html',
@@ -111,12 +120,18 @@ export class Router {
                 }
             },
             {
+                route: '/expenses/delete',
+                load: () => {
+                    new ExpensesDelete(this.openNewRoute.bind(this));
+                },
+            },
+            {
                 route: '/operations',
                 title: 'Доходы & Расходы',
-                filePathTemplate: '/templates/pages/operations/operations.html',
+                filePathTemplate: '/templates/pages/operations/list.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Operations();
+                    new OperationsList();
                 }
             },
             {
@@ -136,6 +151,12 @@ export class Router {
                 load: () => {
                     new EditOperation();
                 }
+            },
+            {
+                route: '/operations/delete',
+                load: () => {
+                    new OperationsDelete(this.openNewRoute.bind(this));
+                },
             },
         ];
     }
@@ -195,7 +216,7 @@ export class Router {
                 contentBlock.innerHTML = await fetch(newRoute.filePathTemplate).then(response => response.text());
             }
             if (newRoute.load && typeof newRoute.load === 'function') {
-                const userInfo = AuthUtils.getUserInfo();
+                const userInfo = JSON.parse(localStorage.getItem(AuthUtils.userInfoKey));
                 const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
                 if(userInfo && accessToken){
                     document.getElementById('profile-user').innerText = userInfo.name + ' ' + userInfo.lastName;
