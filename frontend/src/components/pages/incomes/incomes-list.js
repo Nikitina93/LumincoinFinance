@@ -5,7 +5,7 @@ export class IncomesList {
 
         this.openNewRoute = openNewRoute;
 
-        this.deleteButton = document.getElementById('agree-button');
+        this.deleteIncomeButton = document.getElementById('agree-button');
         this.notDeleteButton = document.getElementById('not-agree-button');
         this.popUpElement = document.getElementById('pop-up');
 
@@ -41,17 +41,15 @@ export class IncomesList {
             editLink.innerText = 'Редактировать';
             editLink.href = `/edit-income?id=${income.id}`;
 
-            const deleteLink = document.createElement('a');
-            deleteLink.classList.add('btn', 'btn-danger', 'btn-delete');
-            deleteLink.innerText = 'Удалить';
+            const deleteButton = document.createElement('a');
+            deleteButton.classList.add('btn', 'btn-danger', 'btn-delete');
+            deleteButton.innerText = 'Удалить';
 
 
-            deleteLink.addEventListener('click', (event) => {
+            deleteButton.addEventListener('click', (event) => {
                 event.preventDefault();
                 this.popUpElement.classList.add('open');
-                this.deleteButton.addEventListener('click', (e) => {
-
-                })
+                this.deleteIncomeButton.href = `/delete-income?id=${income.id}`;
             });
 
 
@@ -62,7 +60,7 @@ export class IncomesList {
 
             cardBody.append(cardTitle);
             cardBody.append(editLink);
-            cardBody.append(deleteLink);
+            cardBody.append(deleteButton);
             cardBox.append(cardBody);
             incomeCategories.prepend(cardBox);
 

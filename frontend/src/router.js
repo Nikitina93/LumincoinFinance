@@ -69,9 +69,9 @@ export class Router {
                 }
             },
             {
-                route: '/creat-income',
+                route: '/create-income',
                 title: 'Создание дохода',
-                filePathTemplate: '/templates/pages/incomes/creat-income.html',
+                filePathTemplate: '/templates/pages/incomes/create-income.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
                     new IncomeCreate(this.openNewRoute.bind(this));
@@ -87,7 +87,7 @@ export class Router {
                 }
             },
             {
-                route: '/income/delete',
+                route: '/delete-income',
                 load: () => {
                     new IncomeDelete(this.openNewRoute.bind(this));
                 },
@@ -120,7 +120,7 @@ export class Router {
                 }
             },
             {
-                route: '/expenses/delete',
+                route: '/expenses-delete',
                 load: () => {
                     new ExpensesDelete(this.openNewRoute.bind(this));
                 },

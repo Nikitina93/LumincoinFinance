@@ -36,22 +36,20 @@ export class ExpensesList {
             cardTitle.classList.add('card-title');
             cardTitle.innerText = expense.title;
 
-            const editLink = document.createElement('a');
-            editLink.classList.add('btn', 'btn-primary');
-            editLink.innerText = 'Редактировать';
-            editLink.href = `/expenses-edit?id=${expense.id}`;
+            const editExpensesButton = document.createElement('a');
+            editExpensesButton.classList.add('btn', 'btn-primary');
+            editExpensesButton.innerText = 'Редактировать';
+            editExpensesButton.href = `/expenses-edit?id=${expense.id}`;
 
-            const deleteLink = document.createElement('a');
-            deleteLink.classList.add('btn', 'btn-danger', 'btn-delete');
-            deleteLink.innerText = 'Удалить';
+            const deleteExpensesButton = document.createElement('a');
+            deleteExpensesButton.classList.add('btn', 'btn-danger', 'btn-delete');
+            deleteExpensesButton.innerText = 'Удалить';
 
 
-            deleteLink.addEventListener('click', (event) => {
+            deleteExpensesButton.addEventListener('click', (event) => {
                 event.preventDefault();
                 this.popUpElement.classList.add('open');
-                this.deleteButton.addEventListener('click', (e) => {
-
-                })
+                this.deleteButton.href = `/expenses-delete?id=${expense.id}`;
             });
 
 
@@ -61,8 +59,8 @@ export class ExpensesList {
             });
 
             cardBody.append(cardTitle);
-            cardBody.append(editLink);
-            cardBody.append(deleteLink);
+            cardBody.append(editExpensesButton);
+            cardBody.append(deleteExpensesButton);
             cardBox.append(cardBody);
             expenseCategories.prepend(cardBox);
 
