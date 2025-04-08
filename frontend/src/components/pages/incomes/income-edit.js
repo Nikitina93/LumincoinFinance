@@ -1,6 +1,6 @@
 import {HttpUtils} from "../../../utils/http-utils";
 
-export class EditIncome{
+export class IncomeEdit {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
 
@@ -12,6 +12,7 @@ export class EditIncome{
         }
 
         this.inputNameElement = document.getElementById('income-create');
+
 
         this.getIncome(incomeId).then();
 
@@ -25,7 +26,6 @@ export class EditIncome{
 
     async getIncome(id) {
         const result = await HttpUtils.request(`/categories/income/${id}`);
-
         if (result.redirect) {
             return this.openNewRoute(result.redirect);
         }
@@ -39,6 +39,7 @@ export class EditIncome{
         }
 
         this.getIncomeResult = result.response;
+
     }
 
     validateForm() {

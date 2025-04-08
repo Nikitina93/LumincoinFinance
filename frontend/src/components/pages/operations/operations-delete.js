@@ -22,7 +22,7 @@ export class OperationsDelete {
             if (!result || result.error || (result.response && result.response.error)) {
                 return console.log('Произошла ошибка по удалению расхода');
             }
-            return this.openNewRoute('/list');
+            return this.openNewRoute('/operations');
         }
     }
 

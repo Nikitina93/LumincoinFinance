@@ -1,13 +1,13 @@
 import {Main} from "./components/pages/main";
-import {Incomes} from "./components/pages/incomes/incomes";
-import {CreatIncome} from "./components/pages/incomes/creat-income";
-import {EditIncome} from "./components/pages/incomes/edit-income";
-import {Expenses} from "./components/pages/expenses/expenses";
-import {CreatExpenses} from "./components/pages/expenses/creat-expenses";
-import {EditExpenses} from "./components/pages/expenses/edit-expenses";
+import {IncomesList} from "./components/pages/incomes/incomes-list";
+import {IncomeCreate} from "./components/pages/incomes/income-create";
+import {IncomeEdit} from "./components/pages/incomes/income-edit";
+import {ExpensesList} from "./components/pages/expenses/expenses-list";
+import {ExpensesCreate} from "./components/pages/expenses/expenses-create";
+import {ExpensesEdit} from "./components/pages/expenses/expenses-edit";
 import {OperationsList} from "./components/pages/operations/operations-list";
-import {CreatOperation} from "./components/pages/operations/creat-operation";
-import {EditOperation} from "./components/pages/operations/edit-operation";
+import {OperatinsCreate} from "./components/pages/operations/operatins-create";
+import {OperationsEdit} from "./components/pages/operations/operations-edit";
 import {Login} from "./components/pages/auth/login";
 import {SignUp} from "./components/pages/auth/sign-up";
 import {Logout} from "./components/pages/auth/logout";
@@ -65,7 +65,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/incomes/incomes.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Incomes();
+                    new IncomesList(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -74,7 +74,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/incomes/creat-income.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new CreatIncome();
+                    new IncomeCreate(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -83,7 +83,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/incomes/edit-income.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new EditIncome();
+                    new IncomeEdit(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -98,25 +98,25 @@ export class Router {
                 filePathTemplate: '/templates/pages/expenses/expenses.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Expenses();
+                    new ExpensesList(this.openNewRoute.bind(this));
                 }
             },
             {
-                route: '/creat-expenses',
+                route: '/create-expenses',
                 title: 'Создание расхода',
-                filePathTemplate: '/templates/pages/expenses/creat-expenses.html',
+                filePathTemplate: '/templates/pages/expenses/create-expenses.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new CreatExpenses();
+                    new ExpensesCreate(this.openNewRoute.bind(this));
                 }
             },
             {
-                route: '/edit-expenses',
+                route: '/expenses-edit',
                 title: 'Редактирование расхода',
                 filePathTemplate: '/templates/pages/expenses/edit-expenses.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new EditExpenses();
+                    new ExpensesEdit(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -140,7 +140,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/operations/creat-operation.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new CreatOperation();
+                    new OperatinsCreate();
                 }
             },
             {
@@ -149,7 +149,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/operations/edit-operation.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new EditOperation();
+                    new OperationsEdit();
                 }
             },
             {

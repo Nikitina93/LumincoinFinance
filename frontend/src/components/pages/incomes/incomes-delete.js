@@ -11,6 +11,7 @@ export class IncomeDelete {
     }
     async incomeDelete() {
         if (this.id) {
+            alert('dxfgyhudfugyi');
             const result = await HttpUtils.request(`/categories/income/${this.id}`, 'DELETE', true);
 
             if (result.redirect) {

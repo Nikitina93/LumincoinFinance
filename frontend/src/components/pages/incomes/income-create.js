@@ -1,6 +1,6 @@
 import {HttpUtils} from "../../../utils/http-utils";
 
-export class CreatIncome{
+export class IncomeCreate {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
 
@@ -31,8 +31,7 @@ export class CreatIncome{
                 title: this.incomeNameInput.value
             })
             if (result.response && result.response.title && !result.error) {
-                console.log('Новая категория успешно создана');
-                this.openNewRoute('/incomes')
+                location.href = '/incomes';
             }
             if (result.error || !result.response || (result.response && result.response.error)) {
                 return console.log('Не удалось осуществить запрос, попробуйте позже');

@@ -1,6 +1,6 @@
 import {HttpUtils} from "../../../utils/http-utils";
 
-export class Incomes {
+export class ExpensesList {
     constructor(openNewRoute) {
 
         this.openNewRoute = openNewRoute;
@@ -14,18 +14,18 @@ export class Incomes {
 
 
     async init() {
-        const incomes = await HttpUtils.request('/categories/income', 'GET', true);
+        const expenses = await HttpUtils.request('/categories/expense', 'GET', true);
 
-        if (incomes.error) {
-            console.log(incomes.response.message);
-            return incomes.redirect ? this.openNewRoute(incomes.redirect) : null;
+        if (expenses.error) {
+            console.log(expenses.response.message);
+            return expenses.redirect ? this.openNewRoute(expenses.redirect) : null;
         }
 
-        const incomeCategories = document.querySelector('.categories');
+        const expenseCategories = document.getElementById('category-expenses');
 
-        incomes.response.reverse();
+        expenses.response.reverse();
 
-        incomes.response.forEach(income => {
+        expenses.response.forEach(expense => {
             const cardBox = document.createElement('div');
             cardBox.classList.add('box');
 
@@ -34,12 +34,12 @@ export class Incomes {
 
             const cardTitle = document.createElement('h5');
             cardTitle.classList.add('card-title');
-            cardTitle.innerText = income.title;
+            cardTitle.innerText = expense.title;
 
             const editLink = document.createElement('a');
             editLink.classList.add('btn', 'btn-primary');
             editLink.innerText = 'Редактировать';
-            editLink.href = `/edit-income?id=${income.id}`;
+            editLink.href = `/expenses-edit?id=${expense.id}`;
 
             const deleteLink = document.createElement('a');
             deleteLink.classList.add('btn', 'btn-danger', 'btn-delete');
@@ -48,24 +48,26 @@ export class Incomes {
 
             deleteLink.addEventListener('click', (event) => {
                 event.preventDefault();
-                this.popUpElement.classList.add('active');
-                this.deleteButton.href = `/income/delete?id=${income.id}`
+                this.popUpElement.classList.add('open');
+                this.deleteButton.addEventListener('click', (e) => {
+
+                })
             });
+
 
             this.notDeleteButton.addEventListener('click', (event) => {
                 event.preventDefault();
-                this.popUpElement.classList.remove('active');
+                this.popUpElement.classList.remove('open');
             });
 
             cardBody.append(cardTitle);
             cardBody.append(editLink);
             cardBody.append(deleteLink);
             cardBox.append(cardBody);
-            incomeCategories.prepend(cardBox);
+            expenseCategories.prepend(cardBox);
 
         });
     }
-
 
 
 
