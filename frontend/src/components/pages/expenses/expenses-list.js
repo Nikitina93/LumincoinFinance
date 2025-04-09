@@ -8,10 +8,24 @@ export class ExpensesList {
         this.deleteButton = document.getElementById('agree-button');
         this.notDeleteButton = document.getElementById('not-agree-button');
         this.popUpElement = document.getElementById('pop-up');
-
+        this.activateBlock();
         this.init().then();
     }
 
+    activateBlock() {
+        const categoryButton = document.getElementById('toggle');
+        const collapse = document.getElementById('dashboard-collapse');
+        const expensesCollapse = document.getElementById('expenses-collapse');
+        const iconCollapse = document.getElementById('collapsed-svg');
+        categoryButton.onclick
+        categoryButton.setAttribute("aria-expanded", "true");
+        categoryButton.classList.remove('collapsed');
+        categoryButton.style.borderRadius = '5px 5px 0px 0px';
+        categoryButton.classList.add('active');
+        iconCollapse.classList.add('active');
+        expensesCollapse.classList.add('active');
+        collapse.classList.add('show');
+    }
 
     async init() {
         const expenses = await HttpUtils.request('/categories/expense', 'GET', true);
@@ -66,7 +80,6 @@ export class ExpensesList {
 
         });
     }
-
 
 
 }

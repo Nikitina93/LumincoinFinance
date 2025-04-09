@@ -131,7 +131,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/operations/list.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new OperationsList();
+                    new OperationsList(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -140,7 +140,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/operations/creat-operation.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new OperatinsCreate();
+                    new OperatinsCreate(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -149,7 +149,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/operations/edit-operation.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new OperationsEdit();
+                    new OperationsEdit(this.openNewRoute.bind(this));
                 }
             },
             {

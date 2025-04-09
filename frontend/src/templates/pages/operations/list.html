@@ -3,49 +3,49 @@
             <h1 class="operations-title title">Доходы и расходы</h1>
         </div>
         <div class="operations-active">
-            <button class="btn-action green-btn" type="button" id="creating-income">Создать доход</button>
-            <button class="btn-action red-btn" type="button" id="creating-expense">Создать расход</button>
+            <a href="/create-operation" class="btn-action green-btn" type="button" id="creating-income">Создать доход</a>
+            <a href="/create-operation" class="btn-action red-btn" type="button" id="creating-expense">Создать расход</a>
         </div>
         <div class="main-filter operations-filter d-flex flex-row flex-wrap align-items-center">
             <div class="main-filter-block">
-                <button class="filter-button btn  border-secondary w-100 " type="button"
+                <a href="/operations?period=today" class="filter-button btn  border-secondary w-100 " type="button"
                         id="main-button-today" data-period="today">Сегодня
-                </button>
+                </a>
             </div>
             <div class="main-filter-block">
-                <button class="filter-button btn border-secondary w-100" type="button"
+                <a href="/operations?period=week" class="filter-button btn border-secondary w-100" type="button"
                         id="main-button-week" data-period="week">
                     Неделя
-                </button>
+                </a>
             </div>
             <div class="main-filter-block">
-                <button class="filter-button btn border-secondary w-100" type="button"
+                <a href="/operations?period=month" class="filter-button btn border-secondary w-100" type="button"
                         id="main-button-month" data-period="month">
                     Месяц
-                </button>
+                </a>
             </div>
             <div class="main-filter-block">
-                <button class="filter-button btn border-secondary w-100" type="button"
+                <a href="/operations?period=year" class="filter-button btn border-secondary w-100" type="button"
                         id="main-button-year" data-period="year">Год
-                </button>
+                </a>
             </div>
             <div class="main-filter-block">
-                <button class="filter-button btn border-secondary w-100" type="button" id="main-button-all"
+                <a  href="/operations?period=all" class="filter-button btn border-secondary w-100" type="button" id="main-button-all"
                         data-period="all">
                     Все
-                </button>
+                </a>
             </div>
             <div class="main-filter-block">
-                <button class="filter-button btn border-secondary w-100" type="button"
+                <a href="/operations?period=interval" class="filter-button btn border-secondary w-100" type="button"
                         id="main-button-interval" data-period="interval">
                     Интервал
-                </button>
+                </a>
             </div>
-            <div class="main-filter-block d-flex">
+            <div class="main-filter-block d-flex" id="date-elements">
                 <span>с</span>
-                <input class="input-filter-block" id="datepicker" placeholder="Дата" disabled>
+                <input class="input-filter-block" id="date-from" placeholder="Дата" disabled>
                 <span>по</span>
-                <input class="input-filter-block" id="datepicker-one" placeholder="Дата" disabled>
+                <input class="input-filter-block" id="date-to" placeholder="Дата" disabled>
             </div>
         </div>
         <div>
@@ -61,17 +61,19 @@
                    <th class="table-option"></th>
                </tr>
                </thead>
+               <tbody id="table-body">
+               </tbody>
            </table>
         </div>
 
 
-    <div class="pop-up" id="pop-up">
+    <div class="pop-up" id="pop-up-operation">
         <div class="pop-up__container">
             <div class="pop-up__body">
                 <span class="pop-up__text">Вы действительно хотите удалить операцию? </span>
                 <div class="pop-up__action">
-                    <button class="btn-action green-btn" id="agree-button">Да, удалить</button>
-                    <button class="btn-action red-btn" id="not-agree-button">Не удалять</button>
+                    <button class="btn-action green-btn" id="delete-operation">Да, удалить</button>
+                    <button class="btn-action red-btn" id="notDelete-operation">Не удалять</button>
                 </div>
 
             </div>
