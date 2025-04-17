@@ -31,7 +31,7 @@ export class IncomeCreate {
                 title: this.incomeNameInput.value
             })
             if (result.response && result.response.title && !result.error) {
-                location.href = '/incomes';
+                this.openNewRoute('/incomes');
             }
             if (result.error || !result.response || (result.response && result.response.error)) {
                 return console.log('Не удалось осуществить запрос, попробуйте позже');

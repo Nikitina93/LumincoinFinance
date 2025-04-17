@@ -3,8 +3,8 @@
             <h1 class="operations-title title">Доходы и расходы</h1>
         </div>
         <div class="operations-active">
-            <a href="/create-operation" class="btn-action green-btn" type="button" id="creating-income">Создать доход</a>
-            <a href="/create-operation" class="btn-action red-btn" type="button" id="creating-expense">Создать расход</a>
+            <a href="/creat-operation" class="btn-action green-btn" type="button" id="creating-income">Создать доход</a>
+            <a href="/creat-operation" class="btn-action red-btn" type="button" id="creating-expense">Создать расход</a>
         </div>
         <div class="main-filter operations-filter d-flex flex-row flex-wrap align-items-center">
             <div class="main-filter-block">
@@ -52,13 +52,13 @@
            <table  class="operations-table" id="data-table">
                <thead>
                <tr>
-                   <th class="table-option"> № операции</th>
-                   <th class="table-option"> Тип</th>
-                   <th class="table-option">Категория</th>
-                   <th class="table-option">Сумма</th>
-                   <th class="table-option">Дата</th>
-                   <th class="table-option">Комментарий</th>
-                   <th class="table-option"></th>
+                   <th class="table-title"> № операции</th>
+                   <th class="table-title"> Тип</th>
+                   <th class="table-title">Категория</th>
+                   <th class="table-title">Сумма</th>
+                   <th class="table-title">Дата</th>
+                   <th class="table-title table-comment">Комментарий</th>
+                   <th class="table-title"></th>
                </tr>
                </thead>
                <tbody id="table-body">
@@ -67,13 +67,13 @@
         </div>
 
 
-    <div class="pop-up" id="pop-up-operation">
+    <div class="pop-up-operation" id="pop-up-operation">
         <div class="pop-up__container">
             <div class="pop-up__body">
                 <span class="pop-up__text">Вы действительно хотите удалить операцию? </span>
                 <div class="pop-up__action">
-                    <button class="btn-action green-btn" id="delete-operation">Да, удалить</button>
-                    <button class="btn-action red-btn" id="notDelete-operation">Не удалять</button>
+                    <a class="btn-action green-btn" id="delete-operation" href = "">Да, удалить</a>
+                    <a class="btn-action red-btn" id="notDelete-operation" href="javascript:void(0)">Не удалять</a>
                 </div>
 
             </div>

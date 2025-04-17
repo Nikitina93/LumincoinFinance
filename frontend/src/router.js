@@ -6,7 +6,7 @@ import {ExpensesList} from "./components/pages/expenses/expenses-list";
 import {ExpensesCreate} from "./components/pages/expenses/expenses-create";
 import {ExpensesEdit} from "./components/pages/expenses/expenses-edit";
 import {OperationsList} from "./components/pages/operations/operations-list";
-import {OperatinsCreate} from "./components/pages/operations/operatins-create";
+import {OperationsCreate} from "./components/pages/operations/operations-create";
 import {OperationsEdit} from "./components/pages/operations/operations-edit";
 import {Login} from "./components/pages/auth/login";
 import {SignUp} from "./components/pages/auth/sign-up";
@@ -128,7 +128,7 @@ export class Router {
             {
                 route: '/operations',
                 title: 'Доходы & Расходы',
-                filePathTemplate: '/templates/pages/operations/list.html',
+                filePathTemplate: '/templates/pages/operations/operations-list.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
                     new OperationsList(this.openNewRoute.bind(this));
@@ -140,7 +140,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/operations/creat-operation.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new OperatinsCreate(this.openNewRoute.bind(this));
+                    new OperationsCreate(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -153,7 +153,7 @@ export class Router {
                 }
             },
             {
-                route: '/operations/delete',
+                route: '/operations-delete',
                 load: () => {
                     new OperationsDelete(this.openNewRoute.bind(this));
                 },

@@ -31,7 +31,7 @@ export class ExpensesCreate {
                 title: this.expenseNameInput.value
             })
             if (result.response && result.response.title && !result.error) {
-                location.href = '/expenses';
+                this.openNewRoute('/expenses');
             }
             if (result.error || !result.response || (result.response && result.response.error)) {
                 return console.log('Не удалось осуществить запрос, попробуйте позже');
