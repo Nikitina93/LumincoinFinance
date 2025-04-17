@@ -7,61 +7,61 @@
             <a href="/creat-operation" class="btn-action red-btn" type="button" id="creating-expense">Создать расход</a>
         </div>
         <div class="main-filter operations-filter d-flex flex-row flex-wrap align-items-center">
-            <div class="main-filter-block">
+            <nav class="main-filter-block">
                 <a href="/operations?period=today" class="filter-button btn  border-secondary w-100 " type="button"
                         id="main-button-today" data-period="today">Сегодня
                 </a>
-            </div>
-            <div class="main-filter-block">
+            </nav>
+            <nav class="main-filter-block">
                 <a href="/operations?period=week" class="filter-button btn border-secondary w-100" type="button"
                         id="main-button-week" data-period="week">
                     Неделя
                 </a>
-            </div>
-            <div class="main-filter-block">
+            </nav>
+            <nav class="main-filter-block">
                 <a href="/operations?period=month" class="filter-button btn border-secondary w-100" type="button"
                         id="main-button-month" data-period="month">
                     Месяц
                 </a>
-            </div>
-            <div class="main-filter-block">
+            </nav>
+            <nav class="main-filter-block">
                 <a href="/operations?period=year" class="filter-button btn border-secondary w-100" type="button"
                         id="main-button-year" data-period="year">Год
                 </a>
-            </div>
-            <div class="main-filter-block">
+            </nav>
+            <nav class="main-filter-block">
                 <a  href="/operations?period=all" class="filter-button btn border-secondary w-100" type="button" id="main-button-all"
                         data-period="all">
                     Все
                 </a>
-            </div>
-            <div class="main-filter-block">
+            </nav>
+            <nav class="main-filter-block">
                 <a href="/operations?period=interval" class="filter-button btn border-secondary w-100" type="button"
                         id="main-button-interval" data-period="interval">
                     Интервал
                 </a>
-            </div>
-            <div class="main-filter-block d-flex" id="date-elements">
+            </nav>
+            <nav class="main-filter-block d-flex" id="date-elements">
                 <span>с</span>
-                <input class="input-filter-block" id="date-from" placeholder="Дата" disabled>
+                <input class="input-filter-block" id="dateFrom" placeholder="Дата" disabled>
                 <span>по</span>
-                <input class="input-filter-block" id="date-to" placeholder="Дата" disabled>
-            </div>
+                <input class="input-filter-block" id="dateTo" placeholder="Дата" disabled>
+            </nav>
         </div>
         <div>
            <table  class="operations-table" id="data-table">
                <thead>
                <tr>
-                   <th class="table-title"> № операции</th>
-                   <th class="table-title"> Тип</th>
-                   <th class="table-title">Категория</th>
-                   <th class="table-title">Сумма</th>
-                   <th class="table-title">Дата</th>
-                   <th class="table-title table-comment">Комментарий</th>
-                   <th class="table-title"></th>
+                   <th class="table-title" scope="col">№ операции</th>
+                   <th class="table-title" scope="col">Тип</th>
+                   <th class="table-title" scope="col">Категория</th>
+                   <th class="table-title" scope="col">Сумма</th>
+                   <th class="table-title" scope="col">Дата</th>
+                   <th class="table-title" scope="col">Комментарий</th>
+                   <th class="table-title" scope="col"></th>
                </tr>
                </thead>
-               <tbody id="table-body">
+               <tbody id='operations-table-body'>
                </tbody>
            </table>
         </div>
