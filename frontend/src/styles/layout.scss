@@ -155,3 +155,34 @@ body {
 .dropdown-item:hover svg path{
   fill: #FFFFFF;
 }
+
+
+.balance-popup {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(64, 64, 64, 0.2);
+  &-wrapper {
+    width: max(280px, 300px);
+    border-radius: 8px;
+    background-color: #F5F5F5;
+    padding: 20px 50px;
+    .form-control {
+      text-align: end;
+    }
+  }
+  &-btn {
+    margin-top: 10px;
+    width: 100%;
+  }
+  &-error {
+    display: none;
+    margin: 5px 0 0;
+    text-align: center;
+    color: #ff0000;
+    font-size: 14px;
+  }
+}

@@ -73,7 +73,8 @@
             </ul>
         </nav>
         <div class="sidebar-balance fs-14 link-custom">
-            Баланс: <span class="text-primary" id="balance">500$</span>
+            Баланс:
+            <a href="javascript:void(0);" class="balance-link"><span id="balance"></span>$</a>
         </div>
         <div class="dropdown user-panel d-flex align-items-center border-top" id="profile">
             <a href="javascript:void(0)"
@@ -105,5 +106,17 @@
     </div>
     <div class="content-layout" id="content-layout">
 
+    </div>
+</div>
+
+
+<div class="balance-popup">
+    <div class="balance-popup-wrapper">
+        <div class="input-group">
+            <input type="text" class="form-control" id="balance-popup">
+            <span class="input-group-text">$</span>
+        </div>
+        <p class="balance-popup-error">Введите сумму баланса</p>
+        <button type="button" class="btn btn-primary balance-popup-btn" id="balance-btn">Обновить</button>
     </div>
 </div>

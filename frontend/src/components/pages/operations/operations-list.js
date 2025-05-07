@@ -11,15 +11,65 @@ export class OperationsList {
         this.deleteButton = document.getElementById('delete-operation');
         this.notDeleteButton = document.getElementById('notDelete-operation');
         this.popUpElement = document.getElementById('pop-up-operation');
-
+        this.activateBlock();
         this.navigation();
     }
 
+    activateBlock() {
+        const operationsButton = document.getElementById('options');
+        const categoryButton = document.getElementById('toggle');
+        const collapse = document.getElementById('dashboard-collapse');
+        const incomesCollapse = document.getElementById('incomes-collapse');
+        const svgCollapse = document.getElementById('collapsed-svg');
+        operationsButton.onclick;
+        operationsButton.classList.add('active');
+        categoryButton.addEventListener('click', function () {
+            operationsButton.classList.add('active');
+            operationsButton.classList.remove('active');
+            categoryButton.classList.add('active');
+            categoryButton.style.borderRadius = '5px 5px 0px 0px';
+            svgCollapse.classList.add('active');
+        })
+
+    }
+
     navigation() {
+
         this.dateElements.style.opacity = '0';
 
         const dateFrom = document.getElementById('dateFrom');
         const dateTo = document.getElementById('dateTo');
+
+
+        document.getElementById('dateFromLabel').addEventListener('click', function() {
+            const dateInput = document.getElementById('dateFrom');
+            dateInput.classList.toggle('hidden');
+            dateInput.focus();
+        });
+
+        document.getElementById('dateToLabel').addEventListener('click', function() {
+            const dateInput = document.getElementById('dateTo');
+            dateInput.classList.toggle('hidden');
+            dateInput.focus();
+        });
+
+        document.getElementById('dateFrom').addEventListener('change', function() {
+            this.classList.add('hidden');
+            const selectedDate = new Date(this.value);
+            const day = String(selectedDate.getDate()).padStart(2, '0');
+            const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
+            const year = selectedDate.getFullYear();
+            document.getElementById('dateFromLabel').textContent = `${day}-${month}-${year}`;
+        });
+
+        document.getElementById('dateTo').addEventListener('change', function() {
+            this.classList.add('hidden');
+            const selectedDate = new Date(this.value);
+            const day = String(selectedDate.getDate()).padStart(2, '0');
+            const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
+            const year = selectedDate.getFullYear();
+            document.getElementById('dateToLabel').textContent = `${day}-${month}-${year}`;
+        });
 
         dateFrom.addEventListener('change', () => {
             sessionStorage.setItem('dateFrom', dateFrom.value);
@@ -85,10 +135,11 @@ export class OperationsList {
 
         operations.sort((a, b) => a.id - b.id);
 
-        operations.forEach((operation,i) => {
+        operations.forEach((operation, i) => {
             const trElement = document.createElement('tr');
             trElement.setAttribute('data-label', '№ операции:');
             trElement.insertCell().innerText = i + 1;
+            trElement.style.borderBottom = '1px solid #DEE2E6';
 
             const typeOperationElement = document.createElement('td');
             typeOperationElement.classList.add('table-label');
@@ -97,12 +148,12 @@ export class OperationsList {
             switch (type) {
                 case 'expense':
                     typeOperationElement.classList.add('table-expenses');
-                    typeOperationElement.innerText = 'Расход';
+                    typeOperationElement.innerText = 'расход';
                     typeOperationElement.style.color = '#DC3545';
                     break;
                 case 'income':
                     typeOperationElement.classList.add('table-income');
-                    typeOperationElement.innerText = 'Доход';
+                    typeOperationElement.innerText = 'доход';
                     typeOperationElement.style.color = '#198754';
                     break;
                 default:
@@ -118,7 +169,7 @@ export class OperationsList {
             const amountOperationElement = document.createElement('td');
             amountOperationElement.classList.add('table-label');
             amountOperationElement.setAttribute('data-label', 'Сумма:');
-            amountOperationElement.innerText = `${operation.amount} $`;
+            amountOperationElement.innerText = `${operation.amount}` + '$';
 
             const dateOperationElement = document.createElement('td');
             dateOperationElement.classList.add('table-label');
@@ -141,10 +192,11 @@ export class OperationsList {
             actionDeleteOperationElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-trash3" viewBox="0 0 16 16">
                 <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
                 </svg>`
+            actionDeleteOperationElement.style.marginRight = '10.5px';
 
             const actionEditOperationElement = document.createElement('a');
             actionEditOperationElement.classList.add('table-icon');
-            actionEditOperationElement.href = `operations/edit?id=${operation.id}`
+            actionEditOperationElement.href = `edit-operation?id=${operation.id}`
             actionEditOperationElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-pencil" viewBox="0 0 16 16">
                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                 </svg>`

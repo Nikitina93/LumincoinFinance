@@ -11,6 +11,19 @@ export class OperationsCreate {
         
         const url = new URLSearchParams(window.location.search);
         const category = url.get('category');
+        const type = url.get('type');
+
+        if (type) {
+            switch (type) {
+                case 'income':
+                    this.formSelectTypeElement.selectedIndex = 1;
+                    break;
+                case 'expense':
+                    this.formSelectTypeElement.selectedIndex = 2;
+                    break;
+            }
+            this.loadCategories().then();
+        }
 
         if (category) {
             switch (category) {
@@ -57,9 +70,8 @@ export class OperationsCreate {
     }
 
     async loadCategories() {
-
         this.formSelectCategoryElement.innerHTML = '';
-        const response = this.formSelectTypeElement.selectedIndex === 0
+        const response = this.formSelectTypeElement.selectedIndex === 1
             ? await HttpUtils.request('/categories/income')
             : await HttpUtils.request('/categories/expense');
 

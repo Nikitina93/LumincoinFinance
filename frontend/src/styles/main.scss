@@ -21,7 +21,7 @@
 }
 
 .main-filter-block span {
-  margin-right: 5px;
+  margin-right: 17px;
 }
 
 .input-filter-block {
@@ -47,18 +47,19 @@
   color: #565e64;
 }
 
-.ui-datepicker .ui-datepicker-prev {
-  background-image: url("../static/images/next.png");
-  background-size: cover;
-}
-
-.ui-datepicker .ui-datepicker-next{
-  background-image: url("../static/images/prev.png");
-  background-size: cover;
-}
-
-
 .btn.active{
   color: #FFFFFF;
-  background-color: #6C757D;
+  background: #6C757D;
 }
+.chart {
+  width: 437px;
+}
+
+.chart-title {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #290661;
+  font-family: Roboto-Medium,sans-serif;
+}
+

@@ -8,9 +8,10 @@ export class IncomesList {
         this.deleteIncomeButton = document.getElementById('agree-button');
         this.notDeleteButton = document.getElementById('not-agree-button');
         this.popUpElement = document.getElementById('pop-up');
-this.activateBlock()
+        this.activateBlock()
         this.init().then();
     }
+
     activateBlock() {
         const categoryButton = document.getElementById('toggle');
         const collapse = document.getElementById('dashboard-collapse');
@@ -32,7 +33,7 @@ this.activateBlock()
         const incomes = await HttpUtils.request('/categories/income', 'GET', true);
 
         if (incomes.error) {
-            console.log(incomes.response.message);
+            console.log(incomes.message);
             return incomes.redirect ? this.openNewRoute(incomes.redirect) : null;
         }
 

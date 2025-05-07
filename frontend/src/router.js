@@ -15,6 +15,7 @@ import {AuthUtils} from "./utils/auth-utils";
 import {IncomeDelete} from "./components/pages/incomes/incomes-delete";
 import {ExpensesDelete} from "./components/pages/expenses/expenses-delete";
 import {OperationsDelete} from "./components/pages/operations/operations-delete";
+import {HttpUtils} from "./utils/http-utils";
 
 export class Router {
     constructor() {
@@ -32,7 +33,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/main.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Main();
+                    new Main(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -220,6 +221,7 @@ export class Router {
                 const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
                 if(userInfo && accessToken){
                     document.getElementById('profile-user').innerText = userInfo.name + ' ' + userInfo.lastName;
+                    this.showBalance().then();
                 }
                 if (!accessToken && newRoute.route !== '/login' && newRoute.route !== '/sign-up') {
                     return await this.openNewRoute('/login');
@@ -234,6 +236,66 @@ export class Router {
             console.log('No route found');
             history.pushState({}, '', '/');  // чтобы в историю браузера добавить url-адреса)
             await this.activateRoute();
+        }
+
+
+    }
+// Работа с балансом
+    async showBalance() {
+        const result = await HttpUtils.request('/balance');
+        if (result.response && !result.redirect) {
+            this.balance = result.response.balance
+            this.balanceElement = document.getElementById('balance');
+            this.balanceElementPopup = document.getElementById('balance-popup');
+            this.balanceElement.innerText = this.balance.toString();
+            this.balanceElementPopup.value = this.balance;
+        } else {
+            return this.openNewRoute(result.redirect);
+        }
+        this.showBalancePopup();
+    }
+
+    showBalancePopup() {
+        this.balancePopupWindow = document.querySelector('.balance-popup');
+        this.balanceElement.addEventListener('click', () => {
+            this.balancePopupWindow.style.display = 'flex';
+        });
+        document.getElementById('balance-btn').addEventListener('click', this.changeBalance.bind(this));
+    }
+
+    validateBalance() {
+        let result = true;
+        this.balanceError = document.querySelector('.balance-popup-error');
+
+        if (this.balanceElementPopup.value) {
+            this.balanceError.style.display = 'none';
+        } else {
+            this.balanceError.style.display = 'block';
+            result = false;
+        }
+        return result;
+    }
+
+    async changeBalance() {
+        if (this.validateBalance()) {
+            if (+this.balanceElementPopup.value !== +this.balance) {
+                const result = await HttpUtils.request('/balance', 'PUT', true, {
+                    newBalance: this.balanceElementPopup.value
+                });
+
+                if (result.response && result.response.balance && !result.error && !result.response.error) {
+                    console.log('Баланс успешно обновился');
+                    this.balanceElement.innerText = result.response.balance;
+                    // Перезаписываем this.balance, для того, чтобы постоянно не отправлялся PUT запрос, даже если баланс не изменялся
+                    this.balance = result.response.balance;
+                }
+
+                if (result.response && result.error || (result.response && result.response.error)) {
+                    console.log('Баланс не получилось обновить, попробуйте позже');
+                }
+            }
+
+            this.balancePopupWindow.style.display = 'none';
         }
     }
 

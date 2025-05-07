@@ -5,14 +5,17 @@
 
 .operations-filter{
 margin-bottom: 40px !important;
- }
+}
 
 .operations-table{
-  display: flex;
   justify-content: center;
   margin-left: 60px;
   margin-right: 60px;
   border-top: 1px solid #DEE2E6;
+  border-bottom: 1px solid #DEE2E6;
+}
+
+thead{
   border-bottom: 1px solid #DEE2E6;
 }
 
@@ -33,6 +36,14 @@ margin-bottom: 40px !important;
   font-size: 16px;
   line-height: 23px;
   text-align: center;
+  color: #000000;
+}
+
+td{
+  text-align: center;
+  font-family: Roboto-Bold, sans-serif;
+  font-size: 16px;
+  line-height: 23px;
   color: #000000;
 }
 
@@ -89,3 +100,23 @@ option{
 a{
   cursor: pointer;
 }
+
+.date-label {
+  cursor: pointer;
+  font-family: Roboto-Medium, sans-serif;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  text-decoration-line: underline;
+  color: #6C757D;
+}
+
+.hidden {
+  display: none;
+}
+
+.comment{
+  margin-bottom: 20px;
+}
+
+
