@@ -7,7 +7,7 @@ export class OperationsList {
         this.tableElement = document.getElementById('operations-table-body');
         this.links = document.querySelectorAll('.filter-button');
         this.dateElements = document.getElementById('date-elements');
-
+        this.todayBtn = document.getElementById('today');
         this.deleteButton = document.getElementById('delete-operation');
         this.notDeleteButton = document.getElementById('notDelete-operation');
         this.popUpElement = document.getElementById('pop-up-operation');
@@ -23,6 +23,7 @@ export class OperationsList {
         const svgCollapse = document.getElementById('collapsed-svg');
         operationsButton.onclick;
         operationsButton.classList.add('active');
+
         categoryButton.addEventListener('click', function () {
             operationsButton.classList.add('active');
             operationsButton.classList.remove('active');
@@ -41,19 +42,19 @@ export class OperationsList {
         const dateTo = document.getElementById('dateTo');
 
 
-        document.getElementById('dateFromLabel').addEventListener('click', function() {
+        document.getElementById('dateFromLabel').addEventListener('click', function () {
             const dateInput = document.getElementById('dateFrom');
             dateInput.classList.toggle('hidden');
             dateInput.focus();
         });
 
-        document.getElementById('dateToLabel').addEventListener('click', function() {
+        document.getElementById('dateToLabel').addEventListener('click', function () {
             const dateInput = document.getElementById('dateTo');
             dateInput.classList.toggle('hidden');
             dateInput.focus();
         });
 
-        document.getElementById('dateFrom').addEventListener('change', function() {
+        document.getElementById('dateFrom').addEventListener('change', function () {
             this.classList.add('hidden');
             const selectedDate = new Date(this.value);
             const day = String(selectedDate.getDate()).padStart(2, '0');
@@ -62,7 +63,7 @@ export class OperationsList {
             document.getElementById('dateFromLabel').textContent = `${day}-${month}-${year}`;
         });
 
-        document.getElementById('dateTo').addEventListener('change', function() {
+        document.getElementById('dateTo').addEventListener('change', function () {
             this.classList.add('hidden');
             const selectedDate = new Date(this.value);
             const day = String(selectedDate.getDate()).padStart(2, '0');

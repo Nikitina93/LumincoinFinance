@@ -115,8 +115,10 @@ a{
   display: none;
 }
 
-.comment{
+.comment {
   margin-bottom: 20px;
 }
 
-
+.filter-button:active{
+  background: #6C757D;
+}

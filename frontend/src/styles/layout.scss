@@ -23,7 +23,7 @@ body {
   padding: 60px 20px 0 20px;
 }
 
-.btn-toggle:not(.collapsed) svg{
+.btn-toggle:not(.collapsed) svg {
   transform: rotate(90deg);
 }
 
@@ -35,7 +35,8 @@ body {
 .path-svg {
   margin-left: 72px;
 }
-.active svg path{
+
+.active svg path {
   fill: #FFFFFF;
 }
 
@@ -80,13 +81,14 @@ body {
 .nav-item:hover a {
   color: #FFFFFF;
 }
+
 .nav-item:hover button {
   color: #FFFFFF;
 }
+
 .nav-item:hover svg path {
   fill: #FFFFFF;
 }
-
 
 
 .collapse {
@@ -131,7 +133,7 @@ body {
   margin-left: 16px;
 }
 
-.dropdown-item{
+.dropdown-item {
   display: flex;
 }
 
@@ -145,14 +147,16 @@ body {
 .dropdown-item-svg {
   width: 15px;
 }
-.dropdown-item:hover{
+
+.dropdown-item:hover {
   background-color: #0D6EFD;
 }
 
-.dropdown-item:hover span{
+.dropdown-item:hover span {
   color: #FFFFFF;
 }
-.dropdown-item:hover svg path{
+
+.dropdown-item:hover svg path {
   fill: #FFFFFF;
 }
 
@@ -165,24 +169,19 @@ body {
   justify-content: center;
   align-items: center;
   background-color: rgba(64, 64, 64, 0.2);
-  &-wrapper {
-    width: max(280px, 300px);
-    border-radius: 8px;
-    background-color: #F5F5F5;
-    padding: 20px 50px;
-    .form-control {
-      text-align: end;
-    }
-  }
-  &-btn {
-    margin-top: 10px;
-    width: 100%;
-  }
-  &-error {
-    display: none;
-    margin: 5px 0 0;
-    text-align: center;
-    color: #ff0000;
-    font-size: 14px;
-  }
+}
+
+.balance-popup-wrapper {
+  width: max(280px, 300px);
+  border-radius: 8px;
+  background-color: #F5F5F5;
+  padding: 20px 50px;
+}
+
+.balance-popup-error {
+  display: none;
+  margin: 5px 0 0;
+  text-align: center;
+  color: #ff0000;
+  font-size: 14px;
 }

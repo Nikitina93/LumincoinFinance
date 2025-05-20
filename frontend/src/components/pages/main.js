@@ -39,27 +39,37 @@ export class Main {
         let dateFrom = sessionStorage.getItem('dateFrom');
         let dateTo = sessionStorage.getItem('dateTo');
 
-        if (dateFrom) {
-            this.dateFromElement.value = dateFrom;
-        }
 
-        if (dateTo) {
-            this.dateToElement.value = dateTo;
-        }
-
-        this.dateFromElement.addEventListener('change', () => {
-            sessionStorage.setItem('dateFrom', this.dateFromElement.value);
-            return this.getDataForChart(`interval&dateFrom=${this.dateFromElement.value}&dateTo=${this.dateToElement.value}`).then();
+        document.getElementById('dateFromLabel').addEventListener('click', function () {
+            const dateInput = document.getElementById('dateFrom');
+            dateInput.classList.toggle('hidden');
+            dateInput.focus();
         });
 
-        this.dateToElement.addEventListener('change', () => {
-            sessionStorage.setItem('dateTo', this.dateToElement.value);
-            return this.getDataForChart(`interval&dateFrom=${this.dateFromElement.value}&dateTo=${this.dateToElement.value}`).then();
+        document.getElementById('dateToLabel').addEventListener('click', function () {
+            const dateInput = document.getElementById('dateTo');
+            dateInput.classList.toggle('hidden');
+            dateInput.focus();
         });
 
-        this.getDataForChart('today').then();
-        this.links[0].classList.add('active');
-        this.links[0].classList.add('disabled');
+        document.getElementById('dateFrom').addEventListener('change', function () {
+            this.classList.add('hidden');
+            const selectedDate = new Date(this.value);
+            const day = String(selectedDate.getDate()).padStart(2, '0');
+            const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
+            const year = selectedDate.getFullYear();
+            document.getElementById('dateFromLabel').textContent = `${day}-${month}-${year}`;
+        });
+
+        document.getElementById('dateTo').addEventListener('change', function () {
+            this.classList.add('hidden');
+            const selectedDate = new Date(this.value);
+            const day = String(selectedDate.getDate()).padStart(2, '0');
+            const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
+            const year = selectedDate.getFullYear();
+            document.getElementById('dateToLabel').textContent = `${day}-${month}-${year}`;
+        });
+
 
         this.links.forEach(activeLink => {
             activeLink.addEventListener('click', () => {
@@ -106,6 +116,7 @@ export class Main {
         });
     }
     async getDataForChart(period) {
+
         const result = await HttpUtils.request(`/operations?period=${period}`);
 
         if (result.response && !result.error) {

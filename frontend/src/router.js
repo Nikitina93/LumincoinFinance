@@ -23,7 +23,6 @@ export class Router {
         this.contentPageElement = document.getElementById('content');
 
 
-
         this.initEvents();
 
         this.routes = [
@@ -197,9 +196,23 @@ export class Router {
     async activateRoute() {
         const urlRoute = window.location.pathname;
         const newRoute = this.routes.find(item => item.route === urlRoute);
-
+        const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
 
         if (newRoute) {
+            // Проверяем, если пользователь уже авторизован
+            if (accessToken) {
+                // Если пользователь пытается перейти на страницы входа или регистрации
+                if (newRoute.route === '/login' || newRoute.route === '/sign-up') {
+                    // Перенаправляем на главную страницу или другую страницу
+                    return await this.openNewRoute('/');
+                }
+            } else {
+                // Если пользователь не авторизован и пытается перейти на защищенные страницы
+                if (newRoute.route !== '/login' && newRoute.route !== '/sign-up') {
+                    return await this.openNewRoute('/login');
+                }
+            }
+
             if (newRoute.title) {
                 this.titlePageElement.innerText = newRoute.title + ' | Lumincoin Finance';
             }
@@ -209,26 +222,25 @@ export class Router {
                 if (newRoute.useLayout) {
                     this.contentPageElement.innerHTML = await fetch(newRoute.useLayout).then(response => response.text());
                     contentBlock = document.getElementById('content-layout');
-
                 } else {
                     this.contentPageElement = document.getElementById('content');
                 }
 
                 contentBlock.innerHTML = await fetch(newRoute.filePathTemplate).then(response => response.text());
             }
+
             if (newRoute.load && typeof newRoute.load === 'function') {
                 const userInfo = JSON.parse(localStorage.getItem(AuthUtils.userInfoKey));
-                const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
-                if(userInfo && accessToken){
-                    document.getElementById('profile-user').innerText = userInfo.name + ' ' + userInfo.lastName;
-                    this.showBalance().then();
+
+                // Проверяем наличие имя пользователя перед его использованием
+                const profileUserElement = document.getElementById('profile-user');
+                if (userInfo) {
+                    if (profileUserElement) {
+                        profileUserElement.innerText = `${userInfo.name} ${userInfo.lastName}`;
+                    }
+                    await this.showBalance();
                 }
-                if (!accessToken && newRoute.route !== '/login' && newRoute.route !== '/sign-up') {
-                    return await this.openNewRoute('/login');
-                }
-                if(accessToken && newRoute.route === '/login' && newRoute.route === '/sign-up'){
-                    return await this.openNewRoute('/')
-                }
+
                 newRoute.load();
             }
 
@@ -237,9 +249,9 @@ export class Router {
             history.pushState({}, '', '/');  // чтобы в историю браузера добавить url-адреса)
             await this.activateRoute();
         }
-
-
     }
+
+
 // Работа с балансом
     async showBalance() {
         const result = await HttpUtils.request('/balance');
@@ -261,6 +273,9 @@ export class Router {
             this.balancePopupWindow.style.display = 'flex';
         });
         document.getElementById('balance-btn').addEventListener('click', this.changeBalance.bind(this));
+        document.getElementById('balance-close').addEventListener('click', ()=>{
+            this.balancePopupWindow.style.display = 'none';
+        })
     }
 
     validateBalance() {

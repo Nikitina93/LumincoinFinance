@@ -2,39 +2,38 @@
     <div class="main-title title-block">
         <h1 class="main-title title">Главная</h1>
     </div>
-    <div class="main-filter d-flex flex-row flex-wrap align-items-center">
+    <div class="main-filter d-flex flex-row align-items-center" >
         <nav class="main-filter-block">
-
-            <a href="" class="filter-button btn  border-secondary w-100 " type="button"
-               id="main-button-today" data-period="today">Сегодня
+            <a href="" id="today" class="filter-button btn  border-secondary w-100 active" type="button"
+               data-period="today">Сегодня
             </a>
         </nav>
         <nav class="main-filter-block">
-            <a href="" class="filter-button btn border-secondary w-100" type="button"
-               id="main-button-week" data-period="week">
+            <a href="" id="week" class="filter-button btn border-secondary w-100" type="button"
+               data-period="week">
                 Неделя
             </a>
         </nav>
         <nav class="main-filter-block">
-            <a href="" class="filter-button btn border-secondary w-100" type="button"
-               id="main-button-month" data-period="month">
+            <a href="" id="month" class="filter-button btn border-secondary w-100" type="button"
+               data-period="month">
                 Месяц
             </a>
         </nav>
         <nav class="main-filter-block">
-            <a href="" class="filter-button btn border-secondary w-100" type="button"
-               id="main-button-year" data-period="year">Год
+            <a href="" id="year" class="filter-button btn border-secondary w-100" type="button"
+               data-period="year">Год
             </a>
         </nav>
         <nav class="main-filter-block">
-            <a href="" class="filter-button btn border-secondary w-100" type="button" id="main-button-all"
-               data-period="all">
+            <a  href="" id="all" class="filter-button btn border-secondary w-100" type="button"
+                data-period="all">
                 Все
             </a>
         </nav>
         <nav class="main-filter-block">
-            <a href="" class="filter-button btn border-secondary w-100" type="button"
-               id="main-button-interval" data-period="interval">
+            <a href="" id="interval" class="filter-button btn border-secondary w-100" type="button"
+               data-period="interval">
                 Интервал
             </a>
         </nav>
@@ -55,9 +54,9 @@
         </nav>
     </div>
 
-    <div class="main-charts charts-wrapper d-flex">
+    <div class="main-charts d-flex" id="charts-container">
         <div class="chart incomes-chart">
-            <canvas   id="incomesChart" width="400"></canvas>
+            <canvas class="incomes-canvas" id="incomesChart" width="400"></canvas>
         </div>
 
         <div class="chart expense-chart">

@@ -51,8 +51,18 @@
   color: #FFFFFF;
   background: #6C757D;
 }
+
+.main-charts{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-left: 85px;
+}
+
 .chart {
-  width: 437px;
+  width: auto;
+  max-width: 437px;
 }
 
 .chart-title {
@@ -61,5 +71,9 @@
   margin-bottom: 20px;
   color: #290661;
   font-family: Roboto-Medium,sans-serif;
+}
+
+.incomes-canvas{
+  border-right: 1px solid #D9D9D9;
 }
 
