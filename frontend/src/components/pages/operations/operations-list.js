@@ -7,10 +7,10 @@ export class OperationsList {
         this.tableElement = document.getElementById('operations-table-body');
         this.links = document.querySelectorAll('.filter-button');
         this.dateElements = document.getElementById('date-elements');
-        this.todayBtn = document.getElementById('today');
         this.deleteButton = document.getElementById('delete-operation');
         this.notDeleteButton = document.getElementById('notDelete-operation');
         this.popUpElement = document.getElementById('pop-up-operation');
+
         this.activateBlock();
         this.navigation();
     }
@@ -18,9 +18,8 @@ export class OperationsList {
     activateBlock() {
         const operationsButton = document.getElementById('options');
         const categoryButton = document.getElementById('toggle');
-        const collapse = document.getElementById('dashboard-collapse');
-        const incomesCollapse = document.getElementById('incomes-collapse');
         const svgCollapse = document.getElementById('collapsed-svg');
+
         operationsButton.onclick;
         operationsButton.classList.add('active');
 
@@ -78,6 +77,7 @@ export class OperationsList {
             return this.getOperations(`/operations?period=interval&dateFrom=${dateFrom.value}&dateTo=${dateTo.value}`).then();
         });
 
+
         dateFrom.value = sessionStorage.getItem('dateFrom');
         dateTo.addEventListener('change', () => {
             sessionStorage.setItem('dateTo', dateTo.value);
@@ -99,7 +99,10 @@ export class OperationsList {
                 activeLink.classList.remove('disabled');
             });
 
+
             let linkPathname = activeLink.href.replace(window.location.origin, '');
+
+
             if (pathname === linkPathname) {
                 activeLink.classList.add('disabled');
                 activeLink.classList.add('active');
@@ -116,6 +119,7 @@ export class OperationsList {
             }
         });
     }
+
 
     async getOperations(url) {
         const response = await HttpUtils.request(url);

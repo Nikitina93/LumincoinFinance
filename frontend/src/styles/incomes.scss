@@ -14,12 +14,14 @@
   height: 121px;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .action {
   justify-items: center;
   width: 16px;
   height: 33px;
+  cursor: pointer;
 }
 
 .action svg path {
@@ -144,3 +146,4 @@
   line-height: 24px;
   color: #6C757D;
 }
+
