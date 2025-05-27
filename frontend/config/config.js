@@ -1,5 +1,5 @@
-const config ={
-    api: 'http://localhost:3000/api'
+const config = {
+    host: 'http://localhost:3000/api'
 }
 
 export default config;

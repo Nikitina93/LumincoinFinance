@@ -6,7 +6,8 @@ export class Login {
         this.openNewRoute = openNewRoute;
 
 
-        if (AuthUtils.getAuthInfo(AuthUtils.userKey)) {
+
+        if (AuthUtils.getUserInfo(AuthUtils.accessTokenKey)) {
             return this.openNewRoute('/');
         }
 
@@ -43,7 +44,7 @@ export class Login {
         this.commonErrorElement.style.display = 'none';
         if (this.validateForm()) {
 
-            const result = await HttpUtils.request('/login', 'POST',{
+            const result = await HttpUtils.request('/login', 'POST', false,{
                 email: this.emailElement.value,
                 password: this.passwordElement.value,
                 rememberMe: this.rememberMeElement.checked
@@ -55,21 +56,11 @@ export class Login {
                 return;
             }
 
-            AuthUtils.setTokens(
-                {
-                    accessToken: result.response.tokens.accessToken
-                },
-                {
-                    refreshToken: result.response.tokens.refreshToken
-                }
-            );
-            AuthUtils.setUser(
-                {
-                    name: result.response.user.name,
-                    lastName: result.response.user.lastName,
-                    id: result.response.user.id
-                }
-            )
+            AuthUtils.setUserInfo(result.response.tokens.accessToken, result.response.tokens.refreshToken, {
+                name: result.response.user.name,
+                lastName: result.response.user.lastName,
+                id: result.response.user.id
+            })
 
             this.openNewRoute('/');
         }

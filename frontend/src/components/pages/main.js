@@ -1,71 +1,19 @@
+import {HttpUtils} from "../../utils/http-utils";
+
 export class Main {
-    constructor() {
-        this.pieChart();
-        this.dateSelection();
+    constructor(openNewRoute) {
+        this.openNewRoute = openNewRoute;
+        this.dateElements = document.getElementById('date-elements');
+        this.dateFromElement = document.getElementById('dateFrom');
+        this.dateToElement = document.getElementById('dateTo');
+        this.links = document.querySelectorAll('.filter-button');
+        this.incomesChartElement = document.getElementById('incomesChart');
+        this.expenseChartElement = document.getElementById('expenseChart');
+        this.activeButton();
         this.activateBlock();
-        this.activateButton();
+        this.navigate();
     }
 
-    pieChart() {
-        const myChart = document.getElementById('myChart');
-        let legend = {
-            labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
-            datasets: [{
-                data: [12, 19, 3, 5, 2],
-                backgroundColor: ['#DC3545', '#FD7E14', '#FFC107', '#20C997', '#0D6EFD'],
-            }]
-        }
-        let newChart = new Chart(myChart, {
-            type: 'pie',
-            data: legend
-        })
-
-
-        const myChartSecond = document.getElementById('myPieChart');
-        let legendSecond = {
-            labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
-            datasets: [{
-                data: [12, 19, 3, 5, 2],
-                backgroundColor: ['#DC3545', '#FD7E14', '#FFC107', '#20C997', '#0D6EFD'],
-            }]
-        }
-        let ChartSecond = new Chart(myChartSecond, {
-            type: 'pie',
-            data: legendSecond
-        })
-    }
-
-    dateSelection() {
-        $(function () {
-            $("#datepicker-first").datepicker({
-                dateFormat: 'dd-mm-yy',
-                language: 'russian'
-            });
-            $("#datepicker-second").datepicker({
-                dateFormat: 'dd-mm-yy',
-            });
-        });
-        $.datepicker.regional['ru'] = {
-            closeText: 'Закрыть',
-            prevText: 'Пред',
-            nextText: 'След',
-            currentText: 'Сегодня',
-            monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-            monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
-                'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
-            dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
-            dayNamesShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
-            dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-            weekHeader: 'Нед',
-            dateFormat: 'dd.mm.yy',
-            firstDay: 1,
-            isRTL: false,
-            showMonthAfterYear: false,
-            yearSuffix: ''
-        };
-        $.datepicker.setDefaults($.datepicker.regional['ru']);
-    }
 
     activateBlock() {
         const mainButton = document.getElementById('main');
@@ -85,90 +33,270 @@ export class Main {
         })
     }
 
-    activateButton() {
-        const todayButton = document.getElementById('main-button-today');
-        const weekButton = document.getElementById('main-button-week');
-        const monthButton = document.getElementById('main-button-month');
-        const yearButton = document.getElementById('main-button-year');
-        const allButton = document.getElementById('main-button-all');
-        const intervalButton = document.getElementById('main-button-interval');
-        const inputDate = document.getElementById('datepicker-first');
-        const inputDateFirst = document.getElementById('datepicker-second');
 
-        todayButton.addEventListener('click', function () {
-            todayButton.classList.add('active');
-            weekButton.classList.remove('active');
-            monthButton.classList.remove('active');
-            yearButton.classList.remove('active');
-            allButton.classList.remove('active');
-            intervalButton.classList.remove('active');
-            inputDate.disabled = true;
-            inputDate.value = '';
-            inputDateFirst.disabled =true;
-            inputDateFirst.value = '';
+
+    navigate() {
+        this.dateElements.style.display = 'none';
+        let dateFrom = sessionStorage.getItem('dateFrom');
+        let dateTo = sessionStorage.getItem('dateTo');
+
+        if (dateFrom) {
+            this.dateFromElement.value = dateFrom;
+        }
+
+        if (dateTo) {
+            this.dateToElement.value = dateTo;
+        }
+
+        this.dateFromElement.addEventListener('change', () => {
+            sessionStorage.setItem('dateFrom', this.dateFromElement.value);
+            return this.getDataForChart(`interval&dateFrom=${this.dateFromElement.value}&dateTo=${this.dateToElement.value}`).then();
         });
 
-        weekButton.addEventListener('click', function () {
-            weekButton.classList.add('active');
-            todayButton.classList.remove('active');
-            monthButton.classList.remove('active');
-            yearButton.classList.remove('active');
-            allButton.classList.remove('active');
-            intervalButton.classList.remove('active');
-            inputDate.disabled = true;
-            inputDate.value = '';
-            inputDateFirst.disabled =true;
-            inputDateFirst.value = '';
+        this.dateToElement.addEventListener('change', () => {
+            sessionStorage.setItem('dateTo', this.dateToElement.value);
+            return this.getDataForChart(`interval&dateFrom=${this.dateFromElement.value}&dateTo=${this.dateToElement.value}`).then();
         });
 
-        monthButton.addEventListener('click', function () {
-            monthButton.classList.add('active');
-            todayButton.classList.remove('active');
-            weekButton.classList.remove('active');
-            yearButton.classList.remove('active');
-            allButton.classList.remove('active');
-            intervalButton.classList.remove('active');
-            inputDate.disabled = true;
-            inputDate.value = '';
-            inputDateFirst.disabled =true;
-            inputDateFirst.value = '';
+        document.getElementById('dateFromBtn').addEventListener('click', function () {
+            const dateInput = document.getElementById('dateFrom');
+            dateInput.classList.toggle('hidden');
+            dateInput.focus();
         });
 
-        yearButton.addEventListener('click', function () {
-            yearButton.classList.add('active');
-            todayButton.classList.remove('active');
-            weekButton.classList.remove('active');
-            monthButton.classList.remove('active');
-            allButton.classList.remove('active');
-            intervalButton.classList.remove('active');
-            inputDate.disabled = true;
-            inputDate.value = '';
-            inputDateFirst.disabled =true;
-            inputDateFirst.value = '';
+        document.getElementById('dateToBtn').addEventListener('click', function () {
+            const dateInput = document.getElementById('dateTo');
+            dateInput.classList.toggle('hidden');
+            dateInput.focus();
         });
 
-        allButton.addEventListener('click', function () {
-            allButton.classList.add('active');
-            todayButton.classList.remove('active');
-            weekButton.classList.remove('active');
-            monthButton.classList.remove('active');
-            yearButton.classList.remove('active');
-            intervalButton.classList.remove('active');
-            inputDate.disabled = true;
-            inputDate.value = '';
-            inputDateFirst.disabled =true;
-            inputDateFirst.value = '';
-        });
 
-        intervalButton.addEventListener('click', function () {
-            intervalButton.classList.add('active');
-            todayButton.classList.remove('active');
-            weekButton.classList.remove('active');
-            monthButton.classList.remove('active');
-            yearButton.classList.remove('active');
-            allButton.classList.remove('active');
-            inputDate.removeAttribute('disabled');
-            inputDateFirst.removeAttribute('disabled');
+
+        this.links.forEach(activeLink => {
+            activeLink.addEventListener('click', () => {
+                this.links.forEach(links => {
+                    links.classList.remove('active');
+                    links.classList.remove('disabled');
+                });
+                switch (activeLink.id) {
+                    case 'today':
+                        this.dateElements.style.display = 'none';
+                        activeLink.classList.add('disabled');
+                        activeLink.classList.add('active');
+                        this.getDataForChart('today').then();
+                        break;
+                    case 'week':
+                        this.dateElements.style.display = 'none';
+                        activeLink.classList.add('disabled');
+                        activeLink.classList.add('active');
+                        this.getDataForChart('week').then();
+                        break;
+                    case 'month':
+                        this.dateElements.style.display = 'none';
+                        activeLink.classList.add('disabled');
+                        activeLink.classList.add('active');
+                        this.getDataForChart('month').then();
+                        break;
+                    case 'year':
+                        this.dateElements.style.display = 'none';
+                        activeLink.classList.add('disabled');
+                        activeLink.classList.add('active');
+                        this.getDataForChart('year').then();
+                        break;
+                    case 'all':
+                        this.dateElements.style.display = 'none';
+                        activeLink.classList.add('disabled');
+                        activeLink.classList.add('active');
+                        this.getDataForChart('all').then();
+                        break;
+                    case 'interval':
+                        activeLink.classList.add('disabled');
+                        activeLink.classList.add('active');
+                        this.dateElements.style.display = 'block';
+                        console.log('Дата from:', this.dateFromElement.value);
+                        console.log('Дата to:', this.dateToElement.value);
+                        this.getDataForChart(`interval&dateFrom=${this.dateFromElement.value}&dateTo=${this.dateToElement.value}`).then();
+                        break;
+                    default:
+                        // activeLink.classList.remove('active');
+                        break;
+                }
+            });
         });
     }
+
+    activeButton() {
+        this.links.forEach(link => {
+            link.classList.remove('active', 'disabled');
+        });
+        const allButton = document.getElementById('all');
+        allButton.classList.add('active', 'disabled');
+        this.dateElements.style.display = 'none';
+        this.getDataForChart('all').then();
+    }
+
+    async getDataForChart(period) {
+
+        const result = await HttpUtils.request(`/operations?period=${period}`);
+
+        if (result.response && !result.error) {
+
+            const income = result.response.filter(item => item.type === 'income');
+            const expense = result.response.filter(item => item.type === 'expense');
+
+            if (income) {
+                let chartStatus = Chart.getChart('incomesChart');
+                if (chartStatus) {
+                    chartStatus.destroy();
+                }
+
+                const incomeNames = []
+                income.forEach(item => incomeNames.push(item.category));
+                const uniqueNamesIncome = Array.from(new Set(incomeNames));
+
+                const labelsCategoryIncome = [];
+                const datasetsDataIncome = [];
+
+                const myFunc = function (name, array) {
+                    const res = array.filter(item => {
+                        return item.category === name
+                    });
+                    const sum = res.reduce((acc, item) => {
+                        return acc += item.amount
+                    }, 0)
+                    const result = res.map(item => {
+                        return {
+                            category: item.category,
+                            amount: sum
+                        }
+                    })
+                    labelsCategoryIncome.push(result[0].category)
+                    datasetsDataIncome.push(result[0].amount)
+                }
+
+                uniqueNamesIncome.forEach(name => {
+                    myFunc(name, income)
+                })
+
+
+                const config = {
+                    type: 'pie',
+                    data: {
+                        labels: labelsCategoryIncome,
+                        datasets: [{
+                            data: datasetsDataIncome,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        color: 'black',
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 12,
+                                        family: 'Roboto',
+                                    },
+                                    boxWidth: 35,
+                                },
+                            },
+                            title: {
+                                display: true,
+                                text: 'Доходы',
+                                color: '#290661',
+                                font: {
+                                    size: 28,
+                                    family: 'Roboto'
+                                },
+                            }
+                        },
+                    },
+                }
+
+                new Chart(this.incomesChartElement, config);
+            }
+
+            if (expense) {
+                let chartStatus = Chart.getChart('expenseChart');
+                if (chartStatus) {
+                    chartStatus.destroy();
+                }
+
+                const expenseNames = []
+                expense.forEach(item => expenseNames.push(item.category));
+                const uniqueNamesExpense = Array.from(new Set(expenseNames));
+
+                const labelsCategoryExpense = [];
+                const datasetsDataExpense = [];
+
+                const myFunc = function (name, array) {
+                    const res = array.filter(item => {
+                        return item.category === name;
+                    });
+                    const sum = res.reduce((acc, item) => {
+                        return acc += item.amount;
+                    }, 0)
+                    const result = res.map(item => {
+                        return {
+                            category: item.category,
+                            amount: sum
+                        }
+                    })
+                    labelsCategoryExpense.push(result[0].category)
+                    datasetsDataExpense.push(result[0].amount)
+                }
+
+                uniqueNamesExpense.forEach(name => {
+                    myFunc(name, expense)
+                })
+
+                const config = {
+                    type: 'pie',
+                    data: {
+                        labels: labelsCategoryExpense,
+                        datasets: [{
+                            data: datasetsDataExpense,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        color: 'black',
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 12,
+                                        family: 'Roboto',
+                                    },
+                                    boxWidth: 35,
+                                },
+                            },
+                            title: {
+                                display: true,
+                                text: 'Расходы',
+                                color: '#290661',
+                                font: {
+                                    size: 28,
+                                    family: 'Roboto'
+                                }
+                            },
+                        },
+                    },
+                }
+
+                new Chart(this.expenseChartElement, config);
+            }
+
+
+        } else {
+            console.log('Не удалось получить данные по доходам и расходам')
+        }
+    }
+
 }

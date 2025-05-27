@@ -3,27 +3,22 @@ import {HttpUtils} from "../../../utils/http-utils";
 
 export class Logout {
     constructor(openNewRoute) {
-
         this.openNewRoute = openNewRoute;
-
-
-        if (!localStorage.getItem('refreshToken')) {
-            return this.openNewRoute('/login');
-        }
 
         this.logout().then();
     }
 
     async logout() {
-        await HttpUtils.request('/logout', 'POST',{
-            refreshToken: AuthUtils.getAuthInfo(AuthUtils.refreshTokenKey),
+
+
+        const result = await HttpUtils.request('/logout', 'POST', false, {
+            refreshToken: AuthUtils.getUserInfo(AuthUtils.refreshTokenKey)
         });
 
-
-        AuthUtils.removeAuthInfo();
-
-        this.openNewRoute('/login');
+        if (result && !result.error) {
+            AuthUtils.removeUserInfo();
+            return this.openNewRoute('/login');
+        }
     }
-
 
 }

@@ -1,4 +1,0 @@
-export class EditIncome{
-    constructor() {
-    }
-}

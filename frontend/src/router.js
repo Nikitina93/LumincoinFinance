@@ -1,23 +1,26 @@
 import {Main} from "./components/pages/main";
-import {Incomes} from "./components/pages/incomes/incomes";
-import {CreatIncome} from "./components/pages/incomes/creat-income";
-import {EditIncome} from "./components/pages/incomes/edit-income";
-import {Expenses} from "./components/pages/expenses/expenses";
-import {CreatExpenses} from "./components/pages/expenses/creat-expenses";
-import {EditExpenses} from "./components/pages/expenses/edit-expenses";
-import {Operations} from "./components/pages/options/operations";
-import {CreatOperation} from "./components/pages/options/creat-operation";
-import {EditOperation} from "./components/pages/options/edit-operation";
+import {IncomesList} from "./components/pages/incomes/incomes-list";
+import {IncomeCreate} from "./components/pages/incomes/income-create";
+import {IncomeEdit} from "./components/pages/incomes/income-edit";
+import {ExpensesList} from "./components/pages/expenses/expenses-list";
+import {ExpensesCreate} from "./components/pages/expenses/expenses-create";
+import {ExpensesEdit} from "./components/pages/expenses/expenses-edit";
+import {OperationsList} from "./components/pages/operations/operations-list";
+import {OperationsCreate} from "./components/pages/operations/operations-create";
+import {OperationsEdit} from "./components/pages/operations/operations-edit";
 import {Login} from "./components/pages/auth/login";
 import {SignUp} from "./components/pages/auth/sign-up";
 import {Logout} from "./components/pages/auth/logout";
 import {AuthUtils} from "./utils/auth-utils";
+import {IncomeDelete} from "./components/pages/incomes/incomes-delete";
+import {ExpensesDelete} from "./components/pages/expenses/expenses-delete";
+import {OperationsDelete} from "./components/pages/operations/operations-delete";
+import {HttpUtils} from "./utils/http-utils";
 
 export class Router {
     constructor() {
         this.titlePageElement = document.getElementById('title');
         this.contentPageElement = document.getElementById('content');
-
 
 
         this.initEvents();
@@ -29,7 +32,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/main.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Main();
+                    new Main(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -62,16 +65,16 @@ export class Router {
                 filePathTemplate: '/templates/pages/incomes/incomes.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Incomes();
+                    new IncomesList(this.openNewRoute.bind(this));
                 }
             },
             {
-                route: '/creat-income',
+                route: '/create-income',
                 title: 'Создание дохода',
-                filePathTemplate: '/templates/pages/incomes/creat-income.html',
+                filePathTemplate: '/templates/pages/incomes/create-income.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new CreatIncome();
+                    new IncomeCreate(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -80,8 +83,14 @@ export class Router {
                 filePathTemplate: '/templates/pages/incomes/edit-income.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new EditIncome();
+                    new IncomeEdit(this.openNewRoute.bind(this));
                 }
+            },
+            {
+                route: '/delete-income',
+                load: () => {
+                    new IncomeDelete(this.openNewRoute.bind(this));
+                },
             },
             {
                 route: '/expenses',
@@ -89,34 +98,40 @@ export class Router {
                 filePathTemplate: '/templates/pages/expenses/expenses.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Expenses();
+                    new ExpensesList(this.openNewRoute.bind(this));
                 }
             },
             {
-                route: '/creat-expenses',
+                route: '/create-expenses',
                 title: 'Создание расхода',
-                filePathTemplate: '/templates/pages/expenses/creat-expenses.html',
+                filePathTemplate: '/templates/pages/expenses/create-expenses.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new CreatExpenses();
+                    new ExpensesCreate(this.openNewRoute.bind(this));
                 }
             },
             {
-                route: '/edit-expenses',
+                route: '/expenses-edit',
                 title: 'Редактирование расхода',
                 filePathTemplate: '/templates/pages/expenses/edit-expenses.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new EditExpenses();
+                    new ExpensesEdit(this.openNewRoute.bind(this));
                 }
+            },
+            {
+                route: '/expenses-delete',
+                load: () => {
+                    new ExpensesDelete(this.openNewRoute.bind(this));
+                },
             },
             {
                 route: '/operations',
                 title: 'Доходы & Расходы',
-                filePathTemplate: '/templates/pages/operations/operations.html',
+                filePathTemplate: '/templates/pages/operations/operations-list.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Operations();
+                    new OperationsList(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -125,7 +140,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/operations/creat-operation.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new CreatOperation();
+                    new OperationsCreate(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -134,8 +149,14 @@ export class Router {
                 filePathTemplate: '/templates/pages/operations/edit-operation.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new EditOperation();
+                    new OperationsEdit(this.openNewRoute.bind(this));
                 }
+            },
+            {
+                route: '/operations-delete',
+                load: () => {
+                    new OperationsDelete(this.openNewRoute.bind(this));
+                },
             },
         ];
     }
@@ -175,9 +196,23 @@ export class Router {
     async activateRoute() {
         const urlRoute = window.location.pathname;
         const newRoute = this.routes.find(item => item.route === urlRoute);
-
+        const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
 
         if (newRoute) {
+            // Проверяем, если пользователь уже авторизован
+            if (accessToken) {
+                // Если пользователь пытается перейти на страницы входа или регистрации
+                if (newRoute.route === '/login' || newRoute.route === '/sign-up') {
+                    // Перенаправляем на главную страницу или другую страницу
+                    return await this.openNewRoute('/');
+                }
+            } else {
+                // Если пользователь не авторизован и пытается перейти на защищенные страницы
+                if (newRoute.route !== '/login' && newRoute.route !== '/sign-up') {
+                    return await this.openNewRoute('/login');
+                }
+            }
+
             if (newRoute.title) {
                 this.titlePageElement.innerText = newRoute.title + ' | Lumincoin Finance';
             }
@@ -187,25 +222,25 @@ export class Router {
                 if (newRoute.useLayout) {
                     this.contentPageElement.innerHTML = await fetch(newRoute.useLayout).then(response => response.text());
                     contentBlock = document.getElementById('content-layout');
-
                 } else {
                     this.contentPageElement = document.getElementById('content');
                 }
 
                 contentBlock.innerHTML = await fetch(newRoute.filePathTemplate).then(response => response.text());
             }
+
             if (newRoute.load && typeof newRoute.load === 'function') {
-                const userInfo = AuthUtils.getUserInfo();
-                const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
-                if(userInfo && accessToken){
-                    document.getElementById('profile-user').innerText = userInfo.name + ' ' + userInfo.lastName;
+                const userInfo = JSON.parse(localStorage.getItem(AuthUtils.userInfoKey));
+
+                // Проверяем наличие имя пользователя перед его использованием
+                const profileUserElement = document.getElementById('profile-user');
+                if (userInfo) {
+                    if (profileUserElement) {
+                        profileUserElement.innerText = `${userInfo.name} ${userInfo.lastName}`;
+                    }
+                    await this.showBalance();
                 }
-                if (!accessToken && newRoute.route !== '/login' && newRoute.route !== '/sign-up') {
-                    return await this.openNewRoute('/login');
-                }
-                if(accessToken && newRoute.route === '/login' && newRoute.route === '/sign-up'){
-                    return await this.openNewRoute('/')
-                }
+
                 newRoute.load();
             }
 
@@ -213,6 +248,69 @@ export class Router {
             console.log('No route found');
             history.pushState({}, '', '/');  // чтобы в историю браузера добавить url-адреса)
             await this.activateRoute();
+        }
+    }
+
+
+// Работа с балансом
+    async showBalance() {
+        const result = await HttpUtils.request('/balance');
+        if (result.response && !result.redirect) {
+            this.balance = result.response.balance
+            this.balanceElement = document.getElementById('balance');
+            this.balanceElementPopup = document.getElementById('balance-popup');
+            this.balanceElement.innerText = this.balance.toString();
+            this.balanceElementPopup.value = this.balance;
+        } else {
+            return this.openNewRoute(result.redirect);
+        }
+        this.showBalancePopup();
+    }
+
+    showBalancePopup() {
+        this.balancePopupWindow = document.querySelector('.balance-popup');
+        this.balanceElement.addEventListener('click', () => {
+            this.balancePopupWindow.style.display = 'flex';
+        });
+        document.getElementById('balance-btn').addEventListener('click', this.changeBalance.bind(this));
+        document.getElementById('balance-close').addEventListener('click', ()=>{
+            this.balancePopupWindow.style.display = 'none';
+        })
+    }
+
+    validateBalance() {
+        let result = true;
+        this.balanceError = document.querySelector('.balance-popup-error');
+
+        if (this.balanceElementPopup.value) {
+            this.balanceError.style.display = 'none';
+        } else {
+            this.balanceError.style.display = 'block';
+            result = false;
+        }
+        return result;
+    }
+
+    async changeBalance() {
+        if (this.validateBalance()) {
+            if (+this.balanceElementPopup.value !== +this.balance) {
+                const result = await HttpUtils.request('/balance', 'PUT', true, {
+                    newBalance: this.balanceElementPopup.value
+                });
+
+                if (result.response && result.response.balance && !result.error && !result.response.error) {
+                    console.log('Баланс успешно обновился');
+                    this.balanceElement.innerText = result.response.balance;
+                    // Перезаписываем this.balance, для того, чтобы постоянно не отправлялся PUT запрос, даже если баланс не изменялся
+                    this.balance = result.response.balance;
+                }
+
+                if (result.response && result.error || (result.response && result.response.error)) {
+                    console.log('Баланс не получилось обновить, попробуйте позже');
+                }
+            }
+
+            this.balancePopupWindow.style.display = 'none';
         }
     }
 
