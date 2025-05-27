@@ -23,6 +23,7 @@ export class OperationsList {
         operationsButton.onclick;
         operationsButton.classList.add('active');
 
+
         categoryButton.addEventListener('click', function () {
             operationsButton.classList.add('active');
             operationsButton.classList.remove('active');
@@ -90,6 +91,7 @@ export class OperationsList {
         const dateToItem = sessionStorage.getItem('dateTo');
 
         const pathname = window.location.href.replace(window.location.origin, '');
+        console.log(pathname)
 
 
         this.links.forEach(activeLink => {
@@ -99,9 +101,7 @@ export class OperationsList {
                 activeLink.classList.remove('disabled');
             });
 
-
             let linkPathname = activeLink.href.replace(window.location.origin, '');
-
 
             if (pathname === linkPathname) {
                 activeLink.classList.add('disabled');
